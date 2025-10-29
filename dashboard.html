@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beaver Trading | Plataforma de Trading</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos -->
+    <style>
+    :root {
+        --primary: #00f0ff;
+        --accent: #7a04eb;
+        --accent-glow: rgba(122, 4, 235, 0.4);
+        --dark: #0a0a1a;
+        --darker: #050510;
+        --light: #e0e0ff;
+        --card-bg: rgba(15, 15, 35, 0.6);
+        --card-bg-solid: rgba(15, 15, 35, 0.9);
+        --neon-glow: 0 0 10px var(--primary), 0 0 20px rgba(0, 240, 255, 0.3);
+        --neon-glow-strong: 0 0 15px var(--primary), 0 0 30px rgba(0, 240, 255, 0.4);
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    }
+    
+    body {
+        background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw9KnHa4j8MdnLw5QzEjbQsRa8wr2PcWMX1w&s') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+    
+    /* Capa oscura sobre la imagen de fondo */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(5, 5, 16, 0.85) 0%, rgba(10, 10, 26, 0.8) 100%);
+        z-index: -1;
+    }
+    
+    .grid-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: -1;
+        perspective: 1000px;
+    }
+    
+    .floating-diamonds {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+    
+    .diamond {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: transparent;
+        border: 1px solid var(--primary);
+        transform: rotate(45deg);
+        opacity: 0.3;
+        animation: float 15s infinite ease-in-out;
+        box-shadow: var(--neon-glow);
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: rotate(45deg) translateY(0) rotate(0deg); opacity: 0.3; }
+        50% { transform: rotate(45deg) translateY(-20px) rotate(180deg); opacity: 0.6; }
+    }
+    
+    .vip-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+    }
+    
+    .vip-particle {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.5;
+        animation: rise linear infinite;
+    }
+    
+    @keyframes rise {
+        0% { 
+            transform: translateY(0) rotate(0deg); 
+            opacity: 0;
+        }
+        10% { 
+            opacity: 0.5;
+        }
+        90% { 
+            opacity: 0.6;
+        }
+        100% { 
+            transform: translateY(-100vh) rotate(360deg); 
+            opacity: 0;
+        }
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 15px 0;
+        background: rgba(10, 10, 26, 0.8);
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 2rem;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: 1px;
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+    }
+    
+    .logo i {
+        color: var(--primary);
+        font-size: 2.2rem;
+        filter: drop-shadow(0 0 5px var(--primary));
+    }
+    
+    .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .logout-btn {
+        padding: 12px 25px;
+        background: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        font-family: 'Rajdhani', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    .logout-btn:hover {
+        background: rgba(0, 240, 255, 0.1);
+        box-shadow: var(--neon-glow);
+        transform: translateY(-2px);
+    }
+    
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(0, 240, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        font-weight: bold;
+        font-size: 1.2rem;
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .user-avatar:hover {
+        background: rgba(0, 240, 255, 0.2);
+        transform: scale(1.05);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .user-avatar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, transparent 50%);
+        z-index: -1;
+    }
+    
+    .dashboard {
+        padding-top: 100px;
+        padding-bottom: 60px;
+    }
+    
+    .welcome-banner {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 35px;
+        margin-bottom: 40px;
+        text-align: center;
+        border: 1px solid rgba(0, 240, 255, 0.1);
+        backdrop-filter: blur(15px);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .welcome-banner:hover {
+        border-color: var(--primary);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), var(--neon-glow);
+    }
+    
+    .welcome-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
+        z-index: -1;
+    }
+    
+    .welcome-text h2 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: var(--neon-glow);
+    }
+    
+    .portal-section {
+        margin-top: 40px;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    
+    .section-title h2 {
+        font-size: 2.8rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        position: relative;
+        display: inline-block;
+        text-shadow: var(--neon-glow);
+    }
+    
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 2px;
+        background: var(--primary);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .portal-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    
+    .portal-btn {
+        position: relative;
+        min-height: 200px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: var(--light);
+        font-weight: 700;
+        font-size: 1.3rem;
+        transition: var(--transition);
+        overflow: hidden;
+        z-index: 1;
+        border: 1px solid rgba(0, 240, 255, 0.1);
+        background: var(--card-bg);
+        padding: 30px;
+        text-align: center;
+        font-family: 'Rajdhani', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .portal-btn:hover {
+        transform: translateY(-8px);
+        border-color: var(--primary);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), var(--neon-glow);
+    }
+    
+    .portal-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
+        z-index: -1;
+    }
+    
+    .portal-btn i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        transition: var(--transition);
+        color: var(--primary);
+        filter: drop-shadow(0 0 5px var(--primary));
+    }
+    
+    .portal-btn:hover i {
+        transform: scale(1.2);
+    }
+    
+    /* Colores individuales para cada botón */
+    .btn-gold { border-color: rgba(255, 215, 0, 0.2); }
+    .btn-gold i { color: #ffd700; filter: drop-shadow(0 0 5px #ffd700); }
+    .btn-gold:hover { border-color: #ffd700; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 215, 0, 0.4); }
+    
+    .btn-vip { border-color: rgba(255, 0, 255, 0.2); }
+    .btn-vip i { color: #ff00ff; filter: drop-shadow(0 0 5px #ff00ff); }
+    .btn-vip:hover { border-color: #ff00ff; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 0, 255, 0.4); }
+    
+    .btn-cyan { border-color: rgba(0, 255, 255, 0.2); }
+    .btn-cyan i { color: #00ffff; filter: drop-shadow(0 0 5px #00ffff); }
+    .btn-cyan:hover { border-color: #00ffff; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 255, 255, 0.4); }
+    
+    /* Estilos para el cargador */
+    .loader-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(5, 5, 16, 0.95);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .loader-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .loader {
+        width: 80px;
+        height: 80px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    
+    .loader:before, .loader:after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        animation: pulsate 1.5s ease-in-out infinite;
+        filter: drop-shadow(0 0 5px var(--primary));
+    }
+    
+    .loader:before {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 240, 255, 0.2);
+        animation-delay: 0s;
+    }
+    
+    .loader:after {
+        width: 80%;
+        height: 80%;
+        background-color: rgba(0, 240, 255, 0.4);
+        top: 10%;
+        left: 10%;
+        animation-delay: 0.2s;
+    }
+    
+    @keyframes pulsate {
+        0%, 100% {
+            transform: scale(0.8);
+            opacity: 0.7;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+    }
+    
+    .loader-text {
+        font-size: 1.5rem;
+        color: var(--primary);
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-shadow: var(--neon-glow);
+        margin-bottom: 20px;
+    }
+    
+    .loader-progress {
+        width: 300px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .loader-progress-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--primary), #7a04eb);
+        border-radius: 3px;
+        box-shadow: 0 0 10px var(--primary);
+        transition: width 0.3s ease;
+    }
+    
+    footer {
+        text-align: center;
+        padding: 40px 0;
+        margin-top: 80px;
+        color: rgba(224, 224, 255, 0.7);
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 1.1rem;
+        border-top: 1px solid rgba(0, 240, 255, 0.2);
+        position: relative;
+    }
+    
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        box-shadow: var(--neon-glow);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .portal-container {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 0 15px;
+        }
+        
+        header {
+            padding: 10px 0;
+        }
+        
+        .logo {
+            font-size: 1.6rem;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+        }
+        
+        .dashboard {
+            padding-top: 80px;
+        }
+        
+        .welcome-banner {
+            padding: 25px;
+        }
+        
+        .welcome-text h2 {
+            font-size: 1.8rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+        }
+        
+        .portal-container {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .portal-btn {
+            min-height: 160px;
+            font-size: 1.1rem;
+            padding: 25px;
+        }
+        
+        .portal-btn i {
+            font-size: 2.5rem;
+        }
+        
+        .loader-progress {
+            width: 250px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .portal-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .portal-btn {
+            min-height: 140px;
+            padding: 20px;
+        }
+        
+        .welcome-text h2 {
+            font-size: 1.5rem;
+        }
+        
+        .section-title h2 {
+            font-size: 1.8rem;
+        }
+        
+        .logout-btn {
+            padding: 10px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+        
+        .loader-progress {
+            width: 200px;
+        }
+        
+        .loader-text {
+            font-size: 1.2rem;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- Efectos futuristas -->
+    <div class="grid-overlay"></div>
+    <div class="floating-diamonds">
+        <div class="diamond" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+        <div class="diamond" style="top: 30%; left: 80%; animation-delay: 5s;"></div>
+        <div class="diamond" style="top: 70%; left: 40%; animation-delay: 10s;"></div>
+        <div class="diamond" style="top: 50%; left: 60%; animation-delay: 15s;"></div>
+        <div class="diamond" style="top: 20%; left: 50%; animation-delay: 2s;"></div>
+        <div class="diamond" style="top: 80%; left: 70%; animation-delay: 7s;"></div>
+        <div class="diamond" style="top: 40%; left: 10%; animation-delay: 12s;"></div>
+    </div>
+    <div class="vip-particles" id="vipParticles"></div>
+    
+    <!-- Overlay del cargador -->
+    <div class="loader-overlay" id="loaderOverlay">
+        <div class="loader"></div>
+        <div class="loader-text" id="loaderText">Cargando...</div>
+        <div class="loader-progress">
+            <div class="loader-progress-bar" id="loaderProgressBar"></div>
+        </div>
+    </div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span> Exportadora e Importadora Amicis GRUPOAMICIS S.A </span>
+                </div>
+                <div class="user-menu">
+                    <button class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <div class="container">
+            <div class="welcome-banner">
+                <div class="welcome-text">
+                    <h2 id="welcomeMessage">Bienvenido</h2>
+                </div>
+            </div>
+
+            <!-- Portal de Accesos -->
+            <section class="portal-section">
+                <div class="section-title">
+                    <h2>PORTAL DE ACCESOS</h2>
+                </div>
+                <div class="portal-container">
+                    <a href="Juguetes/index.html" target="_blank" class="portal-btn btn-gold" data-name="Juguetes">
+                        <i class="fas fa-gamepad"></i>
+                        Juguetes
+                    </a>
+                     <a href="Belleza/index.html" target="_blank" class="portal-btn btn-gold" data-name="Belleza">
+                        <i class="fas fa-spa"></i>
+                        Belleza
+                    </a>
+                    
+                    <a href="Herramientas/index.html" target="_blank" class="portal-btn btn-vip" data-name="Herramientas">
+                        <i class="fas fa-tools"></i>
+                        Herramientas
+                    </a>
+
+                    <a href="Chats/index.html" target="_blank" class="portal-btn btn-gold" data-name="Chats">
+                        <i class="fas fa-comments"></i>
+                        Chats online
+                    </a>
+
+                    <a href="Perfumes/index.html" target="_blank" class="portal-btn btn-gold" data-name="Perfumes">
+                        <i class="fas fa-wine-bottle"></i>
+                        Perfumes
+                    </a>
+
+                    <a href="Eventos/index.html" target="_blank" class="portal-btn btn-vip" data-name="Eventos">
+                        <i class="fas fa-calendar-alt"></i>
+                        Eventos
+                    </a>
+
+                    <a href="Mascotas/index.html" target="_blank" class="portal-btn btn-cyan" data-name="Mascotas">
+                        <i class="fas fa-paw"></i>
+                        Mascotas
+                    </a>
+                    
+                    <a href="Celulares/index.html" target="_blank" class="portal-btn btn-vip" data-name="Celulares">
+                        <i class="fas fa-mobile-alt"></i>
+                        Celulares 
+                    </a>
+                    
+                    <a href="Valentín/index.html" target="_blank" class="portal-btn btn-cyan" data-name="Valentín">
+                        <i class="fas fa-heart"></i>
+                        Valentín
+                    </a>
+                    
+                    <a href=" " target="_blank" class="portal-btn btn-gold" data-name="Videos">
+                        <i class="fas fa-video"></i>
+                        Videos
+                    </a>
+
+                    <a href="Hogar/index.html" target="_blank" class="portal-btn btn-cyan" data-name="Hogar">
+                        <i class="fas fa-home"></i>
+                        Hogar
+                    </a>
+
+                    <a href="App/index.html" target="_blank" class="portal-btn btn-vip" data-name="App Descarga">
+                        <i class="fas fa-download"></i>
+                        App  
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        © 2024 Exportadora e Importadora Amicis |  GRUPOAMICIS S.A | Todos los derechos reservados
+    </footer>
+
+    <script>
+        // Inicializar Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+            authDomain: "beaver-trading.firebaseapp.com",
+            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+            projectId: "beaver-trading",
+            storageBucket: "beaver-trading.firebasestorage.app",
+            messagingSenderId: "926610131904",
+            appId: "1:926610131904:web:c147bd337bd12b4d085625",
+            measurementId: "G-1K51WWF2ZJ"
+        };
+        
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        
+        // Elementos del DOM
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userAvatar = document.getElementById('userAvatar');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const vipParticlesContainer = document.getElementById('vipParticles');
+        const loaderOverlay = document.getElementById('loaderOverlay');
+        const loaderText = document.getElementById('loaderText');
+        const loaderProgressBar = document.getElementById('loaderProgressBar');
+        
+        // Crear efecto de partículas
+        function createVipParticles() {
+            const particleCount = 80;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('vip-particle');
+                
+                // Tamaño aleatorio entre 1px y 4px
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posición inicial aleatoria
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-${size}px`;
+                
+                // Duración de la animación aleatoria
+                const duration = Math.random() * 25 + 15;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Retraso aleatorio
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                
+                // Color aleatorio (cian, violeta o dorado)
+                const colors = ['#00f0ff', '#7a04eb', '#ffd700'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = randomColor;
+                particle.style.boxShadow = `0 0 5px ${randomColor}`;
+                
+                vipParticlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Función para mostrar el cargador
+        function showLoader(moduleName) {
+            // Actualizar el texto del cargador
+            loaderText.textContent = `Accediendo a ${moduleName}...`;
+            
+            // Mostrar el overlay del cargador
+            loaderOverlay.classList.add('active');
+            
+            // Reiniciar la barra de progreso
+            loaderProgressBar.style.width = '0%';
+            
+            // Simular progreso
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                loaderProgressBar.style.width = `${progress}%`;
+                
+                if (progress === 100) {
+                    clearInterval(interval);
+                }
+            }, 300);
+        }
+        
+        // Función para ocultar el cargador
+        function hideLoader() {
+            loaderOverlay.classList.remove('active');
+        }
+        
+        // Verificar autenticación al cargar la página
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                // Si no hay usuario logueado, redirigir al inicio
+                window.location.href = 'index.html';
+            } else {
+                // Mostrar información del usuario
+                const userName = user.displayName || user.email.split('@')[0];
+                welcomeMessage.textContent = `Bienvenido, ${userName}`;
+                userAvatar.textContent = userName.charAt(0).toUpperCase();
+            }
+        });
+        
+        // Cerrar sesión
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        });
+        
+        // Agregar event listeners a los botones del portal
+        document.querySelectorAll('.portal-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Obtener el nombre del módulo desde el atributo data-name
+                const moduleName = button.getAttribute('data-name');
+                const targetUrl = button.getAttribute('href');
+                
+                // Mostrar el cargador
+                showLoader(moduleName);
+                
+                // Esperar 3 segundos antes de redirigir
+                setTimeout(() => {
+                    // Abrir en una nueva pestaña
+                    window.open(targetUrl, '_blank');
+                    
+                    // Ocultar el cargador después de un pequeño retraso
+                    setTimeout(hideLoader, 500);
+                }, 3000);
+            });
+        });
+        
+        // Crear partículas al cargar la página
+        window.addEventListener('load', () => {
+            createVipParticles();
+        });
+    </script>
+</body>
+</html>

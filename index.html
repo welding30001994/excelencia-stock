@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPORTADORA GRUPOAMICIS</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos -->
+    <style>
+    :root {
+        --primary: #00f0ff;
+        --accent: #7a04eb;
+        --accent-glow: rgba(122, 4, 235, 0.4);
+        --dark: #0a0a1a;
+        --darker: #050510;
+        --light: #e0e0ff;
+        --card-bg: rgba(15, 15, 35, 0.6);
+        --card-bg-solid: rgba(15, 15, 35, 0.9);
+        --neon-glow: 0 0 10px var(--primary), 0 0 20px rgba(0, 240, 255, 0.3);
+        --neon-glow-strong: 0 0 15px var(--primary), 0 0 30px rgba(0, 240, 255, 0.4);
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    }
+    
+    /* Cargador futurista */
+    .loader-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--darker);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    
+    .loader-container.fade-out {
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    .loader-logo {
+        font-size: 3.5rem;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        letter-spacing: 2px;
+        color: var(--primary);
+        text-shadow: var(--neon-glow-strong);
+        margin-bottom: 3rem;
+        animation: pulse 2s infinite alternate;
+    }
+    
+    .loader-logo i {
+        color: var(--primary);
+        font-size: 4rem;
+        filter: drop-shadow(0 0 8px var(--primary));
+    }
+    
+    .loader {
+        width: 200px;
+        height: 4px;
+        background: rgba(0, 240, 255, 0.1);
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 2rem;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+    
+    .loader::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        animation: loading 2.5s infinite;
+        box-shadow: var(--neon-glow);
+    }
+    
+    @keyframes loading {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    .loader-text {
+        color: var(--light);
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-align: center;
+        margin-top: 1rem;
+        text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+    
+    .loader-dots {
+        display: flex;
+        gap: 10px;
+        margin-top: 1.5rem;
+    }
+    
+    .loader-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--primary);
+        animation: dot-pulse 1.5s infinite ease-in-out;
+        box-shadow: var(--neon-glow);
+    }
+    
+    .loader-dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .loader-dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+    
+    @keyframes dot-pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.5); opacity: 0.7; }
+    }
+    
+    .loader-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: -1;
+        animation: grid-move 15s linear infinite;
+    }
+    
+    @keyframes grid-move {
+        0% { background-position: 0 0; }
+        100% { background-position: 40px 40px; }
+    }
+    
+    body {
+        background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw9KnHa4j8MdnLw5QzEjbQsRa8wr2PcWMX1w&s') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+    
+    /* Capa oscura sobre la imagen de fondo */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(5, 5, 16, 0.85) 0%, rgba(10, 10, 26, 0.8) 100%);
+        z-index: -1;
+    }
+    
+    .grid-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: -1;
+        perspective: 1000px;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    header {
+        background-color: rgba(10, 10, 26, 0.7);
+        color: white;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        backdrop-filter: blur(15px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: 1px;
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+    }
+    
+    .logo i {
+        color: var(--primary);
+        font-size: 2rem;
+        filter: drop-shadow(0 0 5px var(--primary));
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 30px;
+    }
+    
+    .nav-links a {
+        color: var(--light);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        position: relative;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        padding: 5px 0;
+    }
+    
+    .nav-links a:hover {
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+    }
+    
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background: var(--primary);
+        transition: width 0.4s ease;
+        box-shadow: var(--neon-glow);
+    }
+    
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+    
+    .auth-buttons button {
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        font-family: 'Rajdhani', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        font-size: 0.9rem;
+    }
+    
+    .login-btn {
+        background: transparent;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        margin-right: 15px;
+    }
+    
+    .login-btn:hover {
+        background: rgba(0, 240, 255, 0.1);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .register-btn {
+        background: rgba(0, 240, 255, 0.1);
+        border: 1px solid var(--primary);
+        color: var(--primary);
+    }
+    
+    .register-btn:hover {
+        background: rgba(0, 240, 255, 0.2);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .hero {
+        padding: 10rem 0 8rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(45deg, 
+                transparent 48%, 
+                rgba(0, 240, 255, 0.05) 48%, 
+                rgba(0, 240, 255, 0.05) 52%, 
+                transparent 52%),
+            linear-gradient(-45deg, 
+                transparent 48%, 
+                rgba(0, 240, 255, 0.05) 48%, 
+                rgba(0, 240, 255, 0.05) 52%, 
+                transparent 52%);
+        background-size: 40px 40px;
+        opacity: 0.3;
+        pointer-events: none;
+        animation: grid-move 20s linear infinite;
+    }
+    
+    @keyframes pulse {
+        0% { text-shadow: 0 0 10px var(--primary), 0 0 20px rgba(0, 240, 255, 0.3); }
+        100% { text-shadow: 0 0 15px var(--primary), 0 0 30px rgba(0, 240, 255, 0.5), 0 0 40px rgba(0, 240, 255, 0.2); }
+    }
+    
+    .hero h1 {
+        font-size: 4.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 3px;
+        position: relative;
+        display: inline-block;
+        color: var(--primary);
+        text-shadow: var(--neon-glow-strong);
+        animation: pulse 3s infinite alternate;
+    }
+    
+    .hero h1::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 2px;
+        background: var(--primary);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .hero p {
+        font-size: 1.4rem;
+        max-width: 800px;
+        margin: 0 auto 3rem;
+        color: var(--light);
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 500;
+        line-height: 1.8;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .cta-button {
+        padding: 18px 40px;
+        background-color: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 6px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        box-shadow: var(--neon-glow);
+    }
+    
+    .cta-button:hover {
+        background-color: rgba(0, 240, 255, 0.1);
+        box-shadow: var(--neon-glow-strong);
+        transform: translateY(-3px);
+    }
+    
+    .features {
+        padding: 6rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .features::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.05) 0%, transparent 20%),
+            radial-gradient(circle at 80% 70%, rgba(122, 4, 235, 0.05) 0%, transparent 20%);
+        pointer-events: none;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 5rem;
+        position: relative;
+    }
+    
+    .section-title h2 {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        position: relative;
+        display: inline-block;
+        text-shadow: var(--neon-glow);
+    }
+    
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 2px;
+        background: var(--primary);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .section-title p {
+        color: var(--light);
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 500;
+        line-height: 1.8;
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 3rem;
+    }
+    
+    .feature-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 3rem 2.5rem;
+        transition: var(--transition);
+        border: 1px solid rgba(0, 240, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), var(--neon-glow);
+    }
+    
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
+        z-index: -1;
+    }
+    
+    .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .feature-icon i {
+        color: var(--primary);
+        filter: drop-shadow(0 0 5px var(--primary));
+    }
+    
+    .feature-card h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+    
+    .feature-card p {
+        color: var(--light);
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        font-weight: 500;
+    }
+    
+    footer {
+        background-color: rgba(5, 5, 16, 0.9);
+        color: white;
+        padding: 5rem 0 2rem;
+        text-align: center;
+        border-top: 1px solid rgba(0, 240, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(15px);
+    }
+    
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+    }
+    
+    .footer-logo {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: var(--primary);
+        letter-spacing: 1.5px;
+        text-shadow: var(--neon-glow);
+    }
+    
+    .footer-logo i {
+        color: var(--primary);
+        margin-right: 10px;
+        filter: drop-shadow(0 0 5px var(--primary));
+    }
+    
+    .footer-links {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .footer-links a {
+        color: var(--light);
+        text-decoration: none;
+        position: relative;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: var(--transition);
+        padding: 5px 0;
+    }
+    
+    .footer-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background: var(--primary);
+        transition: width 0.3s ease;
+        box-shadow: var(--neon-glow);
+    }
+    
+    .footer-links a:hover {
+        color: var(--primary);
+    }
+    
+    .footer-links a:hover::after {
+        width: 100%;
+    }
+    
+    .social-icons {
+        display: flex;
+        gap: 25px;
+    }
+    
+    .social-icons a {
+        color: var(--light);
+        font-size: 1.8rem;
+        transition: var(--transition);
+        position: relative;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(0, 240, 255, 0.05);
+        border: 1px solid rgba(0, 240, 255, 0.1);
+        overflow: hidden;
+    }
+    
+    .social-icons a:hover {
+        color: var(--primary);
+        background: rgba(0, 240, 255, 0.1);
+        transform: translateY(-5px);
+        box-shadow: var(--neon-glow);
+    }
+    
+    .copyright {
+        margin-top: 4rem;
+        color: rgba(224, 224, 255, 0.6);
+        font-size: 1rem;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 500;
+    }
+    
+    /* Modal de autenticación */
+    .auth-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 10, 0.9);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(15px);
+    }
+    
+    .auth-container {
+        background: var(--card-bg-solid);
+        border-radius: 15px;
+        width: 100%;
+        max-width: 500px;
+        padding: 3rem;
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), var(--neon-glow);
+        animation: modal-appear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes modal-appear {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .auth-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
+        z-index: -1;
+    }
+    
+    .auth-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+    }
+    
+    .auth-header h2 {
+        color: var(--primary);
+        font-weight: 800;
+        font-size: 2.2rem;
+        letter-spacing: 1.5px;
+        text-shadow: var(--neon-glow);
+    }
+    
+    .close-auth {
+        background: none;
+        border: none;
+        font-size: 2.5rem;
+        cursor: pointer;
+        color: var(--light);
+        transition: var(--transition);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .close-auth:hover {
+        color: var(--primary);
+        transform: rotate(90deg);
+    }
+    
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .auth-form input {
+        padding: 15px 20px;
+        background: rgba(10, 10, 20, 0.8);
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        border-radius: 8px;
+        font-size: 1.1rem;
+        color: white;
+        font-family: 'Rajdhani', sans-serif;
+        transition: var(--transition);
+        letter-spacing: 1px;
+    }
+    
+    .auth-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(10, 10, 20, 0.9);
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+    
+    .auth-form input::placeholder {
+        color: rgba(224, 224, 255, 0.6);
+        font-weight: 500;
+    }
+    
+    .auth-submit {
+        padding: 15px;
+        background: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    .auth-submit:hover {
+        background: rgba(0, 240, 255, 0.1);
+        box-shadow: var(--neon-glow);
+        transform: translateY(-2px);
+    }
+    
+    .auth-toggle {
+        text-align: center;
+        margin-top: 2.5rem;
+        color: rgba(224, 224, 255, 0.6);
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    
+    .auth-toggle span {
+        color: var(--primary);
+        cursor: pointer;
+        font-weight: 700;
+        transition: var(--transition);
+        letter-spacing: 1px;
+        position: relative;
+    }
+    
+    .auth-toggle span:hover {
+        text-shadow: var(--neon-glow);
+    }
+    
+    .auth-toggle span::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background: var(--primary);
+        transition: width 0.3s ease;
+    }
+    
+    .auth-toggle span:hover::after {
+        width: 100%;
+    }
+    
+    .auth-error {
+        color: #ff3366;
+        font-size: 1rem;
+        margin-top: -1rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+    }
+    
+    /* Efectos de partículas para el fondo */
+    #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        pointer-events: none;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .hero h1 {
+            font-size: 3.5rem;
+        }
+        
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+        }
+        
+        .hero {
+            padding: 8rem 0 6rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            padding: 0 15px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+        }
+        
+        .auth-container {
+            padding: 2.5rem 2rem;
+            margin: 0 20px;
+        }
+        
+        .footer-links {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .hero h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .hero p {
+            font-size: 1rem;
+        }
+        
+        .auth-buttons button {
+            padding: 10px 15px;
+            font-size: 0.8rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+        }
+        
+        .feature-card {
+            padding: 2rem 1.5rem;
+        }
+        
+        .auth-container {
+            padding: 2rem 1.5rem;
+        }
+        
+        .auth-form input {
+            padding: 12px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- Cargador futurista -->
+    <div class="loader-container" id="loader">
+        <div class="loader-grid"></div>
+        <div class="loader-logo">
+            <i class="fas fa-crown"></i>
+            <span>EXPORTADORA GRUPOAMICIS</span>
+        </div>
+        <div class="loader"></div>
+        <div class="loader-text">Inicializando sistema VIP...</div>
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+    
+    <div class="grid-overlay"></div>
+    <div id="particles-js"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>EXPORTADORA GRUPOAMICIS</span>
+                </div>
+                <div class="nav-links">
+                    <a href="beneficio.html">Beneficios</a>
+                    <a href="contacto.html">Contacto</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="login-btn" id="openLogin">Iniciar Sesión</button>
+                    <button class="register-btn" id="openRegister">Registrarse</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>EXPORTADORA GRUPOAMICIS</h1>
+                <p>🎯 GRUPOAMICIS: Comercio Global,Una solución digital para empresas y emprendedores que quieren importar o exportar productos de forma ágil, transparente y profesional.</p>
+                <button class="cta-button" id="heroCta">Acceder VIP</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>🔹 Compra desde tu celular</h2>
+                <p>Accede a un catálogo completo de productos importados y exportados directamente desde tu smartphone. Compra en cualquier momento y lugar, sin complicaciones..</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>🔹 Envíos internacionales rápidos</h3>
+                    <p> Contamos con una red logística eficiente para entregas ágiles y seguras, con seguimiento en tiempo real desde que realizas tu compra hasta que recibes tu pedido.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>🔹 Compra directa al proveedor</h3>
+                    <p>Conecta con fabricantes verificados y elimina intermediarios. Obtén precios competitivos y establece relaciones comerciales más sólidas y directas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>🔹 Soporte en todo momento</h3>
+                    <p> Nuestro equipo de atención al cliente está disponible para resolver tus dudas, asesorarte y brindarte soporte antes, durante y después de tu compra.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-crown"></i> EXPORTADORA GRUPOAMICIS
+                </div>
+                <div class="footer-links">
+                    <a href="beneficio.html">Términos</a>
+                    <a href="contacto.html">Soporte</a>
+                </div>
+                <div class="social-icons">
+                    <a href=" "><i class="fab fa-facebook-f"></i></a>                    
+                    <a href=" " target="_blank"><i class="fab fa-tiktok"></i></a>
+                     <a href="https://www.youtube.com/@GrupoAmicis/shorts "><i class="fab fa-youtube"></i></a>
+                    <a href="  "><i class="fab fa-instagram"></i></a>
+                    <a href="  " target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href=" "><i class="fab fa-telegram-plane"></i></a>                    
+
+                </div>
+                <div class="copyright">
+                    &copy; 2024 EXPORTADORA GRUPOAMICIS. Todos los derechos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Autenticación -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="authModalTitle">Iniciar Sesión</h2>
+                <button class="close-auth" id="closeAuth">&times;</button>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div id="authError" class="auth-error"></div>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit" class="auth-submit">Acceder</button>
+            </form>
+            <form class="auth-form" id="registerForm" style="display: none;">
+                <div id="registerError" class="auth-error"></div>
+                <input type="text" id="registerName" placeholder="Nombre completo" required>
+                <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                <button type="submit" class="auth-submit">Unirse a VIP</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="toggleAuthForm">¿No tienes una cuenta? Únete a VIP</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de partículas -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Mostrar cargador por 3 segundos al cargar la página
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('fade-out');
+                
+                setTimeout(function() {
+                    document.getElementById('loader').style.display = 'none';
+                }, 800);
+            }, 3000);
+        });
+        
+        // Función para mostrar el cargador
+        function showLoader() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+            loader.classList.remove('fade-out');
+        }
+        
+        // Función para ocultar el cargador
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 800);
+        }
+        
+        // Inicializar partículas
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#00f0ff" },
+                    shape: {
+                        type: "circle",
+                        stroke: { width: 0, color: "#000000" },
+                        polygon: { nb_sides: 5 }
+                    },
+                    opacity: {
+                        value: 0.3,
+                        random: true,
+                        anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+                    },
+                    size: {
+                        value: 2,
+                        random: true,
+                        anim: { enable: true, speed: 2, size_min: 0.1, sync: false }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#00f0ff",
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                        attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    },
+                    modes: {
+                        grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                        push: { particles_nb: 4 }
+                    }
+                },
+                retina_detect: true
+            });
+        });
+        
+        // Inicializar Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+            authDomain: "beaver-trading.firebaseapp.com",
+            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+            projectId: "beaver-trading",
+            storageBucket: "beaver-trading.firebasestorage.app",
+            messagingSenderId: "926610131904",
+            appId: "1:926610131904:web:c147bd337bd12b4d085625",
+            measurementId: "G-1K51WWF2ZJ"
+        };
+        
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        
+        // Elementos del DOM
+        const authModal = document.getElementById('authModal');
+        const openLogin = document.getElementById('openLogin');
+        const openRegister = document.getElementById('openRegister');
+        const closeAuth = document.getElementById('closeAuth');
+        const authModalTitle = document.getElementById('authModalTitle');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const toggleAuthForm = document.getElementById('toggleAuthForm');
+        const authError = document.getElementById('authError');
+        const registerError = document.getElementById('registerError');
+        const heroCta = document.getElementById('heroCta');
+        
+        // Mostrar modal de login
+        openLogin.addEventListener('click', () => {
+            authModal.style.display = 'flex';
+            loginForm.style.display = 'flex';
+            registerForm.style.display = 'none';
+            authModalTitle.textContent = 'Iniciar Sesión';
+            toggleAuthForm.textContent = '¿No tienes una cuenta? Únete a VIP';
+            authError.textContent = '';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Mostrar modal de registro
+        openRegister.addEventListener('click', () => {
+            authModal.style.display = 'flex';
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+            authModalTitle.textContent = 'Unirse a VIP';
+            toggleAuthForm.textContent = '¿Ya tienes una cuenta? Inicia Sesión';
+            registerError.textContent = '';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Cerrar modal
+        closeAuth.addEventListener('click', () => {
+            authModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Alternar entre login y registro
+        toggleAuthForm.addEventListener('click', () => {
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'flex';
+                registerForm.style.display = 'none';
+                authModalTitle.textContent = 'Iniciar Sesión';
+                toggleAuthForm.textContent = '¿No tienes una cuenta? Únete a VIP';
+                authError.textContent = '';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'flex';
+                authModalTitle.textContent = 'Unirse a VIP';
+                toggleAuthForm.textContent = '¿Ya tienes una cuenta? Inicia Sesión';
+                registerError.textContent = '';
+            }
+        });
+        
+        // Cerrar modal al hacer clic fuera
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Mostrar cargador
+            showLoader();
+            document.querySelector('.loader-text').textContent = 'Verificando credenciales...';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Login exitoso
+                    document.querySelector('.loader-text').textContent = 'Accediendo al sistema VIP...';
+                    
+                    setTimeout(() => {
+                        authModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        loginForm.reset();
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    // Ocultar cargador en caso de error
+                    hideLoader();
+                    authError.textContent = error.message;
+                });
+        });
+        
+        // Registro
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                registerError.textContent = 'Las contraseñas no coinciden';
+                return;
+            }
+            
+            if (password.length < 6) {
+                registerError.textContent = 'La contraseña debe tener al menos 6 caracteres';
+                return;
+            }
+            
+            // Mostrar cargador
+            showLoader();
+            document.querySelector('.loader-text').textContent = 'Creando cuenta VIP...';
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Registro exitoso
+                    const user = userCredential.user;
+                    
+                    // Guardar datos adicionales en la base de datos
+                    const userRef = database.ref('users/' + user.uid);
+                    userRef.set({
+                        name: name,
+                        email: email,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP,
+                        vipAccess: true,
+                        lastLogin: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    
+                    document.querySelector('.loader-text').textContent = 'Configurando acceso VIP...';
+                    
+                    setTimeout(() => {
+                        authModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        registerForm.reset();
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    // Ocultar cargador en caso de error
+                    hideLoader();
+                    registerError.textContent = error.message;
+                });
+        });
+        
+        // CTA button
+        heroCta.addEventListener('click', () => {
+            openRegister.click();
+        });
+        
+        // Verificar estado de autenticación
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Usuario logueado
+                openLogin.style.display = 'none';
+                openRegister.style.display = 'none';
+                // Aquí podrías mostrar un botón de perfil o logout
+            } else {
+                // Usuario no logueado
+                openLogin.style.display = 'inline-block';
+                openRegister.style.display = 'inline-block';
+            }
+        });
+    </script>
+</body>
+</html>
