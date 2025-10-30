@@ -22,26 +22,10 @@
         }
 
         body {
-            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw9KnHa4j8MdnLw5QzEjbQsRa8wr2PcWMX1w&s') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        /* Capa oscura sobre la imagen de fondo */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(5, 5, 16, 0.85) 0%, rgba(10, 10, 26, 0.8) 100%);
-            z-index: -1;
+            padding-bottom: 80px;
         }
 
         .container {
@@ -150,12 +134,6 @@
             height: 200px;
             object-fit: cover;
             border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .product-image:hover {
-            transform: scale(1.02);
         }
 
         .product-info {
@@ -290,7 +268,6 @@
             object-fit: cover;
             border-radius: 5px;
             margin-right: 10px;
-            cursor: pointer;
         }
 
         .cart-item-details {
@@ -421,74 +398,6 @@
             opacity: 1;
         }
 
-        /* Modal para imagen expandida */
-        .image-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100002;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-
-        .image-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .image-modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-        }
-
-        .image-modal-content img {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 5px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-        }
-
-        .close-image-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: color 0.3s;
-        }
-
-        .close-image-modal:hover {
-            color: var(--accent-color);
-        }
-
-        .image-modal-caption {
-            position: absolute;
-            bottom: -40px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            color: white;
-            font-size: 1.1rem;
-            padding: 10px;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -514,30 +423,12 @@
             .products-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .image-modal-content {
-                max-width: 95%;
-            }
-            
-            .close-image-modal {
-                top: -35px;
-                font-size: 1.5rem;
-            }
         }
     </style>
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
     <div class="notification" id="notification">Producto añadido al carrito</div>
-    
-    <!-- Modal para imagen expandida -->
-    <div class="image-modal" id="imageModal">
-        <div class="image-modal-content">
-            <button class="close-image-modal" id="closeImageModal">✕</button>
-            <img id="expandedImage" src="" alt="Imagen expandida">
-            <div class="image-modal-caption" id="imageCaption"></div>
-        </div>
-    </div>
 
     <header>
         <div class="container">
@@ -583,7 +474,6 @@
     <script>
         // Datos de productos con URLs de imagen diferentes
         const products = [
-
 
 {
   code: "6852345547511", 
@@ -12756,6 +12646,11 @@
 
 
 
+
+ 
+ 
+ 
+ 
         ];
 
         // Variables globales
@@ -12774,12 +12669,6 @@
         const sendWhatsApp = document.getElementById('sendWhatsApp');
         const searchBox = document.getElementById('searchBox');
         const notification = document.getElementById('notification');
-        
-        // Elementos del modal de imagen
-        const imageModal = document.getElementById('imageModal');
-        const expandedImage = document.getElementById('expandedImage');
-        const imageCaption = document.getElementById('imageCaption');
-        const closeImageModal = document.getElementById('closeImageModal');
 
         // Inicializar la aplicación
         function init() {
@@ -12797,7 +12686,7 @@
                 productCard.className = 'product-card';
                 
                 productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image" data-code="${product.code}">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
                     <div class="product-info">
                         <div class="product-code">${product.code}</div>
                         <div class="product-name">${product.name}</div>
@@ -12835,14 +12724,6 @@
                     addToCart(code);
                 });
             });
-            
-            // Agregar event listeners a las imágenes para expandirlas
-            document.querySelectorAll('.product-image').forEach(img => {
-                img.addEventListener('click', (e) => {
-                    const code = e.target.dataset.code;
-                    expandImage(code);
-                });
-            });
         }
 
         // Configurar event listeners
@@ -12852,21 +12733,6 @@
             overlay.addEventListener('click', closeCartModal);
             sendWhatsApp.addEventListener('click', sendToWhatsApp);
             searchBox.addEventListener('input', filterProducts);
-            
-            // Event listeners para el modal de imagen
-            closeImageModal.addEventListener('click', closeImageModalFunc);
-            imageModal.addEventListener('click', (e) => {
-                if (e.target === imageModal) {
-                    closeImageModalFunc();
-                }
-            });
-            
-            // Cerrar modal de imagen con tecla Escape
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && imageModal.classList.contains('active')) {
-                    closeImageModalFunc();
-                }
-            });
         }
 
         // Filtrar productos según la búsqueda
@@ -12979,7 +12845,7 @@
                 cartItem.className = 'cart-item';
                 
                 cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" class="cart-item-image" data-code="${item.code}">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">$${item.price.toFixed(2)}</div>
@@ -13019,14 +12885,6 @@
                     removeCartItem(index);
                 });
             });
-            
-            // Agregar event listeners a las imágenes del carrito para expandirlas
-            document.querySelectorAll('.cart-item-image').forEach(img => {
-                img.addEventListener('click', (e) => {
-                    const code = e.target.dataset.code;
-                    expandImage(code);
-                });
-            });
         }
 
         // Disminuir cantidad de un elemento en el carrito
@@ -13050,23 +12908,6 @@
             cart.splice(index, 1);
             renderCartItems();
             updateCartCount();
-        }
-
-        // Expandir imagen
-        function expandImage(code) {
-            const product = products.find(p => p.code === code);
-            if (product) {
-                expandedImage.src = product.image;
-                imageCaption.textContent = `${product.name} - ${product.code}`;
-                imageModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        // Cerrar modal de imagen
-        function closeImageModalFunc() {
-            imageModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
         }
 
         // Enviar pedido por WhatsApp - FUNCIÓN CORREGIDA
