@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,14 +25,14 @@
         --card-bg: rgba(15, 15, 35, 0.6);
         --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    
+   
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    
+   
     body {
         background: linear-gradient(135deg, var(--primary), #001122);
         color: var(--text);
@@ -41,7 +42,7 @@
         position: relative;
         overflow-x: hidden;
     }
-    
+   
     .background-effects {
         position: fixed;
         top: 0;
@@ -51,25 +52,25 @@
         z-index: -1;
         overflow: hidden;
     }
-    
+   
     .grid-lines {
         position: absolute;
         width: 100%;
         height: 100%;
-        background-image: 
+        background-image:
             linear-gradient(rgba(0, 119, 204, 0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(0, 119, 204, 0.1) 1px, transparent 1px);
         background-size: 50px 50px;
         transform: perspective(500px) rotateX(60deg);
         transform-origin: bottom;
     }
-    
+   
     .floating-particles {
         position: absolute;
         width: 100%;
         height: 100%;
     }
-    
+   
     .particle {
         position: absolute;
         background: var(--accent);
@@ -77,19 +78,19 @@
         opacity: 0.3;
         animation: float 15s infinite linear;
     }
-    
+   
     @keyframes float {
         0% { transform: translateY(0) translateX(0); }
         50% { transform: translateY(-100px) translateX(100px); }
         100% { transform: translateY(0) translateX(0); }
     }
-    
+   
     .container {
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 20px;
     }
-    
+   
     header {
         position: fixed;
         top: 0;
@@ -102,13 +103,13 @@
         border-bottom: 1px solid rgba(0, 119, 204, 0.2);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
-    
+   
     nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    
+   
     .logo {
         font-size: 2rem;
         font-weight: 800;
@@ -120,7 +121,7 @@
         color: transparent;
         text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
     }
-    
+   
     .user-info {
         display: flex;
         align-items: center;
@@ -159,7 +160,7 @@
         transform: translateY(-50%);
         color: var(--text-dim);
     }
-    
+   
     .back-btn {
         padding: 12px 25px;
         background: transparent;
@@ -173,18 +174,18 @@
         letter-spacing: 1.5px;
         margin-right: 15px;
     }
-    
+   
     .back-btn:hover {
         background: rgba(0, 119, 204, 0.1);
         box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
         transform: translateY(-2px);
     }
-    
+   
     .dashboard {
         padding-top: 100px;
         padding-bottom: 60px;
     }
-    
+   
     .welcome-section {
         text-align: center;
         margin-bottom: 3rem;
@@ -193,7 +194,7 @@
         border-radius: 10px;
         border: 1px solid rgba(0, 119, 204, 0.2);
     }
-    
+   
     .welcome-title {
         font-size: 2.5rem;
         margin-bottom: 1rem;
@@ -202,21 +203,21 @@
         background-clip: text;
         color: transparent;
     }
-    
+   
     .welcome-subtitle {
         font-size: 1.2rem;
         color: var(--text-dim);
         max-width: 800px;
         margin: 0 auto;
     }
-    
+   
     .products-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 25px;
         margin-top: 20px;
     }
-    
+   
     .product-card {
         background: rgba(10, 26, 42, 0.8);
         backdrop-filter: blur(10px);
@@ -227,7 +228,7 @@
         position: relative;
         overflow: hidden;
     }
-    
+   
     .product-card::before {
         content: '';
         position: absolute;
@@ -237,13 +238,13 @@
         height: 4px;
         background: linear-gradient(to right, var(--gold), var(--accent));
     }
-    
+   
     .product-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0, 119, 204, 0.2);
         border-color: var(--accent);
     }
-    
+   
     .product-image {
         width: 100%;
         height: 200px;
@@ -254,17 +255,17 @@
         transition: transform 0.3s;
         border: 1px solid rgba(0, 119, 204, 0.2);
     }
-    
+   
     .product-image:hover {
         transform: scale(1.02);
     }
-    
+   
     .product-code {
         font-size: 0.9rem;
         color: var(--text-dim);
         margin-bottom: 5px;
     }
-    
+   
     .product-name {
         font-size: 1.1rem;
         margin-bottom: 10px;
@@ -272,21 +273,21 @@
         overflow: hidden;
         font-weight: 600;
     }
-    
+   
     .product-price {
         font-size: 1.4rem;
         font-weight: bold;
         color: var(--accent);
         margin-bottom: 15px;
     }
-    
+   
     .quantity-controls {
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 15px;
     }
-    
+   
     .quantity-btn {
         background-color: rgba(0, 119, 204, 0.2);
         border: 1px solid var(--accent);
@@ -301,17 +302,17 @@
         transition: background-color 0.3s;
         font-weight: bold;
     }
-    
+   
     .quantity-btn:hover {
         background-color: rgba(0, 119, 204, 0.4);
     }
-    
+   
     .quantity-display {
         font-size: 1.2rem;
         font-weight: bold;
         margin: 0 15px;
     }
-    
+   
     .add-to-cart {
         width: 100%;
         padding: 12px;
@@ -324,13 +325,13 @@
         transition: all 0.3s ease;
         font-size: 1rem;
     }
-    
+   
     .add-to-cart:hover {
         background: linear-gradient(to right, #005599, #003366);
         box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
         transform: translateY(-2px);
     }
-    
+   
     /* Estilos para el carrito */
     .cart-icon {
         position: relative;
@@ -703,7 +704,7 @@
         color: var(--accent);
         opacity: 0.5;
     }
-    
+   
     footer {
         text-align: center;
         padding: 40px 0;
@@ -713,7 +714,7 @@
         border-top: 1px solid rgba(0, 119, 204, 0.2);
         position: relative;
     }
-    
+   
     footer::before {
         content: '';
         position: absolute;
@@ -723,30 +724,30 @@
         height: 1px;
         background: linear-gradient(90deg, transparent, var(--accent), transparent);
     }
-    
+   
     /* RESPONSIVE MEJORADO PARA MÓVILES */
     @media (max-width: 768px) {
         header {
             padding: 10px 0;
         }
-        
+       
         .logo {
             font-size: 1.6rem;
         }
-        
+       
         .dashboard {
             padding-top: 140px; /* Más espacio para el header en móvil */
         }
-        
+       
         .welcome-title {
             font-size: 2rem;
         }
-        
+       
         .products-grid {
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
-        
+       
         .back-btn {
             padding: 10px 15px;
             font-size: 0.9rem;
@@ -811,7 +812,7 @@
             top: -10px;
             right: -10px;
         }
-        
+       
         /* CARRITO RESPONSIVE MEJORADO */
         .cart-modal {
             max-width: 100%;
@@ -879,7 +880,7 @@
             text-align: center;
         }
     }
-    
+   
     @media (max-width: 480px) {
         body {
             padding: 15px;
@@ -893,7 +894,7 @@
             grid-template-columns: 1fr;
             gap: 15px;
         }
-        
+       
         .welcome-title {
             font-size: 1.8rem;
         }
@@ -932,11 +933,11 @@
             padding: 14px;
             font-size: 1rem;
         }
-        
+       
         .image-modal-content {
             max-width: 95%;
         }
-        
+       
         .close-image-modal {
             top: -45px;
             font-size: 1.8rem;
@@ -991,15 +992,15 @@
         .product-card:hover {
             transform: none;
         }
-        
+       
         .add-to-cart:hover {
             transform: none;
         }
-        
+       
         .back-btn:hover {
             transform: none;
         }
-        
+       
         .quantity-btn:active,
         .cart-item-quantity button:active,
         .remove-item:active {
@@ -1014,7 +1015,7 @@
         <div class="grid-lines"></div>
         <div class="floating-particles" id="particles"></div>
     </div>
-    
+   
     <header>
         <div class="container">
             <nav>
@@ -1037,7 +1038,7 @@
             </nav>
         </div>
     </header>
-    
+   
     <div class="dashboard">
         <div class="container">
             <div class="welcome-section">
@@ -1050,7 +1051,7 @@
             </div>
         </div>
     </div>
-    
+   
     <footer>
         <p>Sistema de Gestión Empresarial &copy; 2023 | COMERCIAL LA EXCELENCIA</p>
     </footer>
@@ -1058,7 +1059,7 @@
     <!-- Modal del carrito -->
     <div class="overlay" id="overlay"></div>
     <div class="notification" id="notification">Producto añadido al carrito</div>
-    
+   
     <!-- Modal para imagen expandida -->
     <div class="image-modal" id="imageModal">
         <div class="image-modal-content">
@@ -1095,585 +1096,121 @@
         // Datos de productos con URLs de imagen diferentes
         const products = [
 
+ // Carcasas iPhone 11
+  {"code": "HD1192", "name": "11 ARCOIRIS CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1192.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1530", "name": "11 BORDE DE COLOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1530.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1484", "name": "11 BROCHE UNICOLOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1484.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1415", "name": "11 ESCARCHADO CON BROCHE CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1415.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1507", "name": "11 FLOWERS CADENA CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1507.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1179", "name": "11 LADYS SENCILLO CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1179.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1438", "name": "11 LOVE CORAZON CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1438.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1462", "name": "11 MAX AMOR - CARCASA", "price": 1.00, "image": "https://m.media-amazon.com/images/I/61BYmUgvXgL._UF1000,1000_QL80_.jpg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1311", "name": "11 MAX ANILLO_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1311.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1403", "name": "11 MAX ANILLO_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1403.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1167", "name": "11 MAX CADENA CORAZONES CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1167.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1144", "name": "11 MAX CORAZON_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1144.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1180", "name": "11 MAX LADYS SENCILLO CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1180.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1052", "name": "11 MAX MATE CHINA_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1052.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1216", "name": "11 MAX MATIZADO - CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1216.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1356", "name": "11 MAX PERLAS_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1356.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1128", "name": "11 MAX PROTECTOR_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1128.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1334", "name": "11 MAX SUPREME_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1334.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1096", "name": "11 MAX TRANSPARENTE CH_CARCASA", "price": 0.20, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1096.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1355", "name": "11 PERLAS - CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1355.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1238", "name": "11 RELIEVE FIGURAS CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1238.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1297", "name": "11 TACOS PROTECTOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1297.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1193", "name": "11MAX ARCOIRIS CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1193.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1531", "name": "11MAX BORDE DE COLOR CH_CARCASA", "price": 1.00, "image": "https://media1.apokin.es/114360-large_default/funda-premium-transpartente-borde-color-magsafe-para-iphone-11-6-colores54340.jpg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1485", "name": "11MAX BROCHE UNICOLOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1485.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1416", "name": "11MAX ESCARCHADO CON BROCHE CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1416.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1508", "name": "11MAX FLOWERS CADENA CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1508.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1275", "name": "11MAX IPHONE UNICOLOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1275.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1380", "name": "11MAX LAZO GIRLS CH_CARCASA", "price": 1.00, "image": "https://m.media-amazon.com/images/I/51ZfmwuYRWL._AC_UF894,1000_QL80_.jpg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1439", "name": "11MAX LOVE CORAZON CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1439.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1239", "name": "11MAX RELIEVE FIGURAS CH_CARCASA", "price": 1.00, "image": "https://phonetify.com.co/wp-content/uploads/2022/07/Vista-Case-Tough-Flotante.webp", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1262", "name": "11MAX SUPREME1 CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1262.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1298", "name": "11MAX TACOS PROTECTOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1298.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1461", "name": "1P 11 AMOR - CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1461.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
 
+  // Carcasas iPhone 5S
+  {"code": "HD1450", "name": "5S AMOR CH_CARCASA", "price": 1.00, "image": "https://aynperu.com/cdn/shop/products/silicone21_720x_b99a39fe-ed24-4842-8356-4c9dc69bdbf4_1080x.jpg?v=1605388105", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1299", "name": "5S ANILLO ROSA CH_CARCASA", "price": 1.00, "image": "https://m.media-amazon.com/images/I/61hR0hBnfHL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1181", "name": "5S ARCOIRIS CH_CARCASA", "price": 1.00, "image": "https://img.joomcdn.net/6ec12e8c3aaa1d8219ce3e68b80a36fcf2289d64_original.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1519", "name": "5S BORDE DE COLOR CH_CARCASA", "price": 1.00, "image": "https://m.media-amazon.com/images/I/71VijvZkzKL.jpg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1473", "name": "5S BROCHE UNICOLOR CH_CARCASA", "price": 1.00, "image": "https://m.media-amazon.com/images/I/71eCRSzvmJL._AC_UF894,1000_QL80_.jpg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1155", "name": "5S CADENA CORAZONES CH_CARCASA", "price": 1.00, "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX90Tl6vITc9mNwRSWkV3hOuG6PvA7ByDoYd88C5hdFlK0Bg47bBcJljdKYSAFPckKUWA&usqp=CAU", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1132", "name": "5S CORAZON ESPEJO CH_CARCASA", "price": 1.00, "image": "https://http2.mlstatic.com/D_Q_NP_2X_894078-CBT89301976935_082025-T.webp", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1404", "name": "5S ESCARCHADO CON BROCHE CH_CARCASA", "price": 1.00, "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTTXV0BrKP68PjM0YGFjDvCiY_u3PZHbcsuQozvy78cU6C4q3MIzWzq4PICq0a4L0ZMes&usqp=CAU", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1496", "name": "5S FLOWERS CADENA CH_CARCASA", "price": 1.00, "image": "https://img.joomcdn.net/8dab559ead9e84cfe19df38caa86f4f6110a0d70_original.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1263", "name": "5S IPHONE UNICOLOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1263.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1168", "name": "5S LADYS SENCILLO CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1168.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1368", "name": "5S LAZO GIRLS CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1368.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1427", "name": "5S LOVE CORAZON CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1427.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1204", "name": "5S MATIZADO CON DORADO CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1204.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1345", "name": "5S PERLAS CORAZON CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1345.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1115", "name": "5S PROTECTOR TELF CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1115.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1227", "name": "5S RELIEVE FIGURAS CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1227.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1391", "name": "5S STAR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1391.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1250", "name": "5S SUPREME1 CH-CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1250.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1322", "name": "5S SUPREME2 CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1322.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1286", "name": "5S TACOS PROTECTOR CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1286.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
+  {"code": "HD1103", "name": "5S TRANSPARENTE CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1103.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 5S"},
 
-        
-  {
-    "code": "6852345547511",
-    "name": "AM HIGH QUALITY MOSQUITO NET. MOSQUITERO",
-    "price": 10.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/6852345547511.jpeg"
-  },
-  {
-    "code": "7861038062483",
-    "name": "ANTIBACTERIANTE",
-    "price": 2.10,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/7861038062483.jpeg"
-  },
-  {
-    "code": "6202110243207",
-    "name": "KIT PARA BEBE ACCESORIO HOGAR AM",
-    "price": 1.60,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/6202110243207.jpeg"
-  },
-  {
-    "code": "HD1192",
-    "name": "11 ARCOIRIS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1192.jpeg"
-  },
-  {
-    "code": "HD1530",
-    "name": "11 BORDE DE COLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1530.jpeg"
-  },
-  {
-    "code": "HD1484",
-    "name": "11 BROCHE UNICOLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1484.jpeg"
-  },
-  {
-    "code": "HD1415",
-    "name": "11 ESCARCHADO CON BROCHE CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1415.jpeg"
-  },
-  {
-    "code": "HD1507",
-    "name": "11 FLOWERS CADENA CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1507.jpeg"
-  },
-  {
-    "code": "HD1179",
-    "name": "11 LADYS SENCILLO CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1179.jpeg"
-  },
-  {
-    "code": "HD1438",
-    "name": "11 LOVE CORAZON CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1438.jpeg"
-  },
-  {
-    "code": "HD1462",
-    "name": "11 MAX AMOR - CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1462.jpeg"
-  },
-  {
-    "code": "HD1311",
-    "name": "11 MAX ANILLO_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1311.jpeg"
-  },
-  {
-    "code": "HD1403",
-    "name": "11 MAX ANILLO_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1403.jpeg"
-  },
-  {
-    "code": "HD1167",
-    "name": "11 MAX CADENA CORAZONES CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1167.jpeg"
-  },
-  {
-    "code": "HD1144",
-    "name": "11 MAX CORAZON_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1144.jpeg"
-  },
-  {
-    "code": "HD1180",
-    "name": "11 MAX LADYS SENCILLO CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1180.jpeg"
-  },
-  {
-    "code": "HD1052",
-    "name": "11 MAX MATE CHINA_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1052.jpeg"
-  },
-  {
-    "code": "HD1216",
-    "name": "11 MAX MATIZADO - CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1216.jpeg"
-  },
-  {
-    "code": "HD1356",
-    "name": "11 MAX PERLAS_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1356.jpeg"
-  },
-  {
-    "code": "HD1128",
-    "name": "11 MAX PROTECTOR_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1128.jpeg"
-  },
-  {
-    "code": "HD1334",
-    "name": "11 MAX SUPREME_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1334.jpeg"
-  },
-  {
-    "code": "HD1096",
-    "name": "11 MAX TRANSPARENTE CH_CARCASA",
-    "price": 0.20,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1096.jpeg"
-  },
-  {
-    "code": "HD1355",
-    "name": "11 PERLAS - CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1355.jpeg"
-  },
-  {
-    "code": "HD1238",
-    "name": "11 RELIEVE FIGURAS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1238.jpeg"
-  },
-  {
-    "code": "HD1297",
-    "name": "11 TACOS PROTECTOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1297.jpeg"
-  },
-  {
-    "code": "HD1193",
-    "name": "11MAX ARCOIRIS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1193.jpeg"
-  },
-  {
-    "code": "HD1531",
-    "name": "11MAX BORDE DE COLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1531.jpeg"
-  },
-  {
-    "code": "HD1485",
-    "name": "11MAX BROCHE UNICOLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1485.jpeg"
-  },
-  {
-    "code": "HD1416",
-    "name": "11MAX ESCARCHADO CON BROCHE CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1416.jpeg"
-  },
-  {
-    "code": "HD1508",
-    "name": "11MAX FLOWERS CADENA CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1508.jpeg"
-  },
-  {
-    "code": "HD1275",
-    "name": "11MAX IPHONE UNICOLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1275.jpeg"
-  },
-  {
-    "code": "HD1380",
-    "name": "11MAX LAZO GIRLS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1380.jpeg"
-  },
-  {
-    "code": "HD1439",
-    "name": "11MAX LOVE CORAZON CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1439.jpeg"
-  },
-  {
-    "code": "HD1239",
-    "name": "11MAX RELIEVE FIGURAS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1239.jpeg"
-  },
-  {
-    "code": "HD1262",
-    "name": "11MAX SUPREME1 CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1262.jpeg"
-  },
-  {
-    "code": "HD1298",
-    "name": "11MAX TACOS PROTECTOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1298.jpeg"
-  },
-  {
-    "code": "HD1824",
-    "name": "18W FOCO CHINA",
-    "price": 2.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1824.jpeg"
-  },
-  {
-    "code": "HD1461",
-    "name": "1P 11 AMOR - CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1461.jpeg"
-  },
-  {
-    "code": "HD3654",
-    "name": "3654 GAFAS CHINA",
-    "price": 3.50,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3654.jpeg"
-  },
-  {
-    "code": "HD3179",
-    "name": "3D 05/2021 VISUALIZACION LAMPARA CREATIVE_FIG",
-    "price": 4.50,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3179.jpeg"
-  },
-  {
-    "code": "HD5300",
-    "name": "5300 TRANSPARENTE CHINA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5300.jpeg"
-  },
-  {
-    "code": "HD5301",
-    "name": "5301 TRANSPARENTE CHINA",
-    "price": 1.60,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5301.jpeg"
-  },
-  {
-    "code": "HD5304",
-    "name": "5304 TRANSPARENTE CHINA",
-    "price": 1.60,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5304.jpeg"
-  },
-  {
-    "code": "HD5305",
-    "name": "5305 TRANSPARENTE CHINA",
-    "price": 1.60,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5305.jpeg"
-  },
-  {
-    "code": "HD5309",
-    "name": "5309 CELESTE CHINA",
-    "price": 1.60,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5309.jpeg"
-  },
-  {
-    "code": "HD5312",
-    "name": "5312 ROSA CHINA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5312.jpeg"
-  },
-  {
-    "code": "HD5313",
-    "name": "5313 TRANSPARENTE CHINA",
-    "price": 1.60,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5313.jpeg"
-  },
-  {
-    "code": "HD5314",
-    "name": "5314 ROJO CHINA",
-    "price": 2.30,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5314.jpeg"
-  },
-  {
-    "code": "HD5315",
-    "name": "5315 FUCSIA CHINA",
-    "price": 2.30,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5315.jpeg"
-  },
-  {
-    "code": "HD5316",
-    "name": "5316 ROSA CHINA",
-    "price": 2.30,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5316.jpeg"
-  },
-  {
-    "code": "HD5317",
-    "name": "5317 CELESTE CHINA",
-    "price": 2.30,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5317.jpeg"
-  },
-  {
-    "code": "HD5318",
-    "name": "5318 TRANSPARENTE CHINA",
-    "price": 1.20,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5318.jpeg"
-  },
-  {
-    "code": "HD5319",
-    "name": "5319 FUCSIA CHINA",
-    "price": 1.10,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5319.jpeg"
-  },
-  {
-    "code": "HD5320",
-    "name": "5320 ROSA CHINA",
-    "price": 1.10,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5320.jpeg"
-  },
-  {
-    "code": "HD5321",
-    "name": "5321 CELESTE CHINA",
-    "price": 1.10,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5321.jpeg"
-  },
-  {
-    "code": "HD3246",
-    "name": "5363-2 WISKERO VASO 05/2021 LA CAJA ESTA 4,20",
-    "price": 4.20,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3246.jpeg"
-  },
-  {
-    "code": "HD4457",
-    "name": "570-5 RELOJ 30*30*4CM",
-    "price": 4.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD4457.jpeg"
-  },
-  {
-    "code": "HD1450",
-    "name": "5S AMOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1450.jpeg"
-  },
-  {
-    "code": "HD1299",
-    "name": "5S ANILLO ROSA CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1299.jpeg"
-  },
-  {
-    "code": "HD1181",
-    "name": "5S ARCOIRIS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1181.jpeg"
-  },
-  {
-    "code": "HD1519",
-    "name": "5S BORDE DE COLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1519.jpeg"
-  },
-  {
-    "code": "HD1473",
-    "name": "5S BROCHE UNICOLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1473.jpeg"
-  },
-  {
-    "code": "HD1155",
-    "name": "5S CADENA CORAZONES CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1155.jpeg"
-  },
-  {
-    "code": "HD1132",
-    "name": "5S CORAZON ESPEJO CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1132.jpeg"
-  },
-  {
-    "code": "HD1404",
-    "name": "5S ESCARCHADO CON BROCHE CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1404.jpeg"
-  },
-  {
-    "code": "HD1496",
-    "name": "5S FLOWERS CADENA CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1496.jpeg"
-  },
-  {
-    "code": "HD1263",
-    "name": "5S IPHONE UNICOLOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1263.jpeg"
-  },
-  {
-    "code": "HD1168",
-    "name": "5S LADYS SENCILLO CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1168.jpeg"
-  },
-  {
-    "code": "HD1368",
-    "name": "5S LAZO GIRLS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1368.jpeg"
-  },
-  {
-    "code": "HD1427",
-    "name": "5S LOVE CORAZON CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1427.jpeg"
-  },
-  {
-    "code": "HD1204",
-    "name": "5S MATIZADO CON DORADO CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1204.jpeg"
-  },
-  {
-    "code": "HD1345",
-    "name": "5S PERLAS CORAZON CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1345.jpeg"
-  },
-  {
-    "code": "HD1115",
-    "name": "5S PROTECTOR TELF CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1115.jpeg"
-  },
-  {
-    "code": "HD1227",
-    "name": "5S RELIEVE FIGURAS CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1227.jpeg"
-  },
-  {
-    "code": "HD1391",
-    "name": "5S STAR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1391.jpeg"
-  },
-  {
-    "code": "HD1250",
-    "name": "5S SUPREME1 CH-CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1250.jpeg"
-  },
-  {
-    "code": "HD1322",
-    "name": "5S SUPREME2 CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1322.jpeg"
-  },
-  {
-    "code": "HD1286",
-    "name": "5S TACOS PROTECTOR CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1286.jpeg"
-  },
-  {
-    "code": "HD1103",
-    "name": "5S TRANSPARENTE CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1103.jpeg"
-  },
-  {
-    "code": "HD1133",
-    "name": "6 CORAZON ESPEJO CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1133.jpeg"
-  },
-  {
-    "code": "HD1453",
-    "name": "6 PLUS AMOR_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1453.jpeg"
-  },
-  {
-    "code": "HD1301",
-    "name": "6 PLUS ANILLO_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1301.jpeg"
-  },
-  {
-    "code": "HD1135",
-    "name": "6 PLUS CORAZON_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1135.jpeg"
-  },
-  {
-    "code": "HD1371",
-    "name": "6 PLUS LAZO_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1371.jpeg"
-  },
-  {
-    "code": "HD1207",
-    "name": "6 PLUS MATIZADO_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1207.jpeg"
-  },
-  {
-    "code": "HD1367",
-    "name": "6 PLUS PERLAS_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1367.jpeg"
-  },
-  {
-    "code": "HD1118",
-    "name": "6 PLUS PROTECTOR_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1118.jpeg"
-  },
-  {
-    "code": "HD1394",
-    "name": "6 PLUS STAR_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1394.jpeg"
-  },
-  {
-    "code": "HD1325",
-    "name": "6 PLUS SUPREME - CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1325.jpeg"
-  },
-  {
-    "code": "HD1253",
-    "name": "6 PLUS SUPREME_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1253.jpeg"
-  },
-  {
-    "code": "HD1116",
-    "name": "6 PROTECTOR TELF CH_CARCASA",
-    "price": 1.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1116.jpeg"
-  },
-  {
-    "code": "HD3230",
-    "name": "6118 AGENDAS GRANDE 05/2021",
-    "price": 2.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3230.jpeg"
-  },
-  {
-    "code": "HD3231",
-    "name": "6125 AGENDAS MEDIANA 05/2021",
-    "price": 2.00,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3231.jpeg"
-  },
-  {
-    "code": "HD650",
-    "name": "650 GAFAS CHINA",
-    "price": 1.50,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD650.jpeg"
-  },
-  {
-    "code": "HD2248",
-    "name": "652 GAFAS CHINA",
-    "price": 1.40,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD2248.jpeg"
-  },
-  {
-    "code": "HD2250",
-    "name": "657 GAFAS CHINA",
-    "price": 2.50,
-    "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD2250.jpeg"
-  }
+  // Carcasas iPhone 6/6 Plus
+  {"code": "HD1133", "name": "6 CORAZON ESPEJO CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1133.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1453", "name": "6 PLUS AMOR_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1453.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1301", "name": "6 PLUS ANILLO_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1301.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1135", "name": "6 PLUS CORAZON_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1135.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1371", "name": "6 PLUS LAZO_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1371.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1207", "name": "6 PLUS MATIZADO_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1207.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1367", "name": "6 PLUS PERLAS_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1367.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1118", "name": "6 PLUS PROTECTOR_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1118.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1394", "name": "6 PLUS STAR_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1394.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1325", "name": "6 PLUS SUPREME - CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1325.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+  {"code": "HD1253", "name": "6 PLUS SUPREME_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1253.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 11"},
+  {"code": "HD1116", "name": "6 PROTECTOR TELF CH_CARCASA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1116.jpeg", "category": "carcasas_celular", "subcategory": "iPhone 6/6 Plus"},
+
+  // Iluminación
+  {"code": "HD1824", "name": "18W FOCO CHINA", "price": 2.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD1824.jpeg", "category": "iluminacion"},
+  {"code": "HD3179", "name": "3D 05/2021 VISUALIZACION LAMPARA CREATIVE_FIG", "price": 4.50, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3179.jpeg", "category": "iluminacion"},
+
+  // Gafas
+  {"code": "HD3654", "name": "3654 GAFAS CHINA", "price": 3.50, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3654.jpeg", "category": "gafas_accesorios"},
+  {"code": "HD650", "name": "650 GAFAS CHINA", "price": 1.50, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD650.jpeg", "category": "gafas_accesorios"},
+  {"code": "HD2248", "name": "652 GAFAS CHINA", "price": 1.40, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD2248.jpeg", "category": "gafas_accesorios"},
+  {"code": "HD2250", "name": "657 GAFAS CHINA", "price": 2.50, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD2250.jpeg", "category": "gafas_accesorios"},
+
+  // Hogar
+  {"code": "6852345547511", "name": "AM HIGH QUALITY MOSQUITO NET. MOSQUITERO", "price": 10.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/6852345547511.jpeg", "category": "hogar"},
+  {"code": "6202110243207", "name": "KIT PARA BEBE ACCESORIO HOGAR AM", "price": 1.60, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/6202110243207.jpeg", "category": "hogar"},
+  {"code": "HD3246", "name": "5363-2 WISKERO VASO 05/2021 LA CAJA ESTA 4,20", "price": 4.20, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3246.jpeg", "category": "hogar"},
+
+  // Limpieza
+  {"code": "7861038062483", "name": "ANTIBACTERIANTE", "price": 2.10, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/7861038062483.jpeg", "category": "limpieza_higiene"},
+
+  // Decoración
+  {"code": "HD4457", "name": "570-5 RELOJ 30*30*4CM", "price": 4.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD4457.jpeg", "category": "decoracion"},
+
+  // Papelería
+  {"code": "HD3230", "name": "6118 AGENDAS GRANDE 05/2021", "price": 2.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3230.jpeg", "category": "papeleria"},
+  {"code": "HD3231", "name": "6125 AGENDAS MEDIANA 05/2021", "price": 2.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD3231.jpeg", "category": "papeleria"},
+
+  // Varios
+  {"code": "HD5300", "name": "5300 TRANSPARENTE CHINA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5300.jpeg", "category": "varios"},
+  {"code": "HD5301", "name": "5301 TRANSPARENTE CHINA", "price": 1.60, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5301.jpeg", "category": "varios"},
+  {"code": "HD5304", "name": "5304 TRANSPARENTE CHINA", "price": 1.60, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5304.jpeg", "category": "varios"},
+  {"code": "HD5305", "name": "5305 TRANSPARENTE CHINA", "price": 1.60, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5305.jpeg", "category": "varios"},
+  {"code": "HD5309", "name": "5309 CELESTE CHINA", "price": 1.60, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5309.jpeg", "category": "varios"},
+  {"code": "HD5312", "name": "5312 ROSA CHINA", "price": 1.00, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5312.jpeg", "category": "varios"},
+  {"code": "HD5313", "name": "5313 TRANSPARENTE CHINA", "price": 1.60, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5313.jpeg", "category": "varios"},
+  {"code": "HD5314", "name": "5314 ROJO CHINA", "price": 2.30, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5314.jpeg", "category": "varios"},
+  {"code": "HD5315", "name": "5315 FUCSIA CHINA", "price": 2.30, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5315.jpeg", "category": "varios"},
+  {"code": "HD5316", "name": "5316 ROSA CHINA", "price": 2.30, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5316.jpeg", "category": "varios"},
+  {"code": "HD5317", "name": "5317 CELESTE CHINA", "price": 2.30, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5317.jpeg", "category": "varios"},
+  {"code": "HD5318", "name": "5318 TRANSPARENTE CHINA", "price": 1.20, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5318.jpeg", "category": "varios"},
+  {"code": "HD5319", "name": "5319 FUCSIA CHINA", "price": 1.10, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5319.jpeg", "category": "varios"},
+  {"code": "HD5320", "name": "5320 ROSA CHINA", "price": 1.10, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5320.jpeg", "category": "varios"},
+  {"code": "HD5321", "name": "5321 CELESTE CHINA", "price": 1.10, "image": "https://raw.githubusercontent.com/welding30001994/excelencia-oficial/refs/heads/main/catalogo/HD5321.jpeg", "category": "varios"}
 
 
 
@@ -1711,7 +1248,9 @@
 
 
 
-        
+
+
+       
         ];
 
         // Variables globales
@@ -1734,7 +1273,7 @@
         const notification = document.getElementById('notification');
         const backBtn = document.getElementById('backBtn');
         const continueShopping = document.getElementById('continueShopping');
-        
+       
         // Elementos del modal de imagen
         const imageModal = document.getElementById('imageModal');
         const expandedImage = document.getElementById('expandedImage');
@@ -1745,20 +1284,20 @@
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 30;
-            
+           
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
-                
+               
                 const size = Math.random() * 6 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
-                
+               
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
-                
+               
                 particle.style.animationDelay = `${Math.random() * 15}s`;
-                
+               
                 particlesContainer.appendChild(particle);
             }
         }
@@ -1775,7 +1314,7 @@
         // Renderizar productos en la cuadrícula
         function renderProducts() {
             productsGrid.innerHTML = '';
-            
+           
             if (filteredProducts.length === 0) {
                 productsGrid.innerHTML = `
                     <div class="no-results">
@@ -1785,11 +1324,11 @@
                 `;
                 return;
             }
-            
+           
             filteredProducts.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
-                
+               
                 productCard.innerHTML = `
                     <img src="${product.image}" alt="${product.name}" class="product-image" data-code="${product.code}">
                     <div class="product-info">
@@ -1806,10 +1345,10 @@
                         </button>
                     </div>
                 `;
-                
+               
                 productsGrid.appendChild(productCard);
             });
-            
+           
             // Agregar event listeners a los botones de cantidad y añadir al carrito
             document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -1817,21 +1356,21 @@
                     decreaseQuantity(code);
                 });
             });
-            
+           
             document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const code = e.target.dataset.code;
                     increaseQuantity(code);
                 });
             });
-            
+           
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const code = e.target.dataset.code;
                     addToCart(code);
                 });
             });
-            
+           
             // Agregar event listeners a las imágenes para expandirlas
             document.querySelectorAll('.product-image').forEach(img => {
                 img.addEventListener('click', (e) => {
@@ -1850,7 +1389,7 @@
             searchBox.addEventListener('input', filterProducts);
             backBtn.addEventListener('click', goBack);
             continueShopping.addEventListener('click', closeCartModal);
-            
+           
             // Event listeners para el modal de imagen
             closeImageModal.addEventListener('click', closeImageModalFunc);
             imageModal.addEventListener('click', (e) => {
@@ -1858,7 +1397,7 @@
                     closeImageModalFunc();
                 }
             });
-            
+           
             // Cerrar modal de imagen con tecla Escape
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && imageModal.classList.contains('active')) {
@@ -1874,10 +1413,10 @@
 
             cartModal.addEventListener('touchmove', (e) => {
                 if (!startX) return;
-                
+               
                 const currentX = e.touches[0].clientX;
                 const diff = startX - currentX;
-                
+               
                 // Si el deslizamiento es hacia la derecha más de 50px, cerrar el carrito
                 if (diff < -50) {
                     closeCartModal();
@@ -1889,8 +1428,8 @@
         // Filtrar productos según la búsqueda
         function filterProducts() {
             const searchTerm = searchBox.value.toLowerCase();
-            filteredProducts = products.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) || 
+            filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(searchTerm) ||
                 product.code.toLowerCase().includes(searchTerm)
             );
             renderProducts();
@@ -1917,18 +1456,18 @@
             const product = products.find(p => p.code === code);
             const quantityDisplay = document.getElementById(`quantity-${code}`);
             const quantity = parseInt(quantityDisplay.textContent);
-            
+           
             // Cargar carrito actual desde localStorage
             loadCartFromStorage();
-            
+           
             // Verificar si la categoría existe en el carrito
             if (!cartData[categoryName]) {
                 cartData[categoryName] = [];
             }
-            
+           
             // Verificar si el producto ya está en el carrito
             const existingItemIndex = cartData[categoryName].findIndex(item => item.code === code);
-            
+           
             if (existingItemIndex !== -1) {
                 // Si ya existe, actualizar la cantidad
                 cartData[categoryName][existingItemIndex].quantity += quantity;
@@ -1943,19 +1482,19 @@
                     category: categoryName
                 });
             }
-            
+           
             // Guardar carrito actualizado
             saveCartToStorage();
-            
+           
             // Actualizar carrito local para esta página
             updateLocalCart();
-            
+           
             // Restablecer cantidad a 1
             quantityDisplay.textContent = '1';
-            
+           
             // Actualizar contador del carrito
             updateCartCount();
-            
+           
             // Mostrar notificación
             showNotification(`Se añadieron ${quantity} ${product.name} al carrito`);
         }
@@ -1987,7 +1526,7 @@
         function showNotification(message) {
             notification.textContent = message;
             notification.classList.add('show');
-            
+           
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 2000);
@@ -2023,29 +1562,29 @@
         // Renderizar elementos del carrito
         function renderCartItems() {
             cartItems.innerHTML = '';
-            
+           
             // Mostrar productos de todas las categorías
             let total = 0;
             let hasItems = false;
-            
+           
             Object.keys(cartData).forEach(category => {
                 if (cartData[category].length > 0) {
                     hasItems = true;
-                    
+                   
                     // Agregar encabezado de categoría
                     const categoryHeader = document.createElement('div');
                     categoryHeader.className = 'cart-category-header';
                     categoryHeader.textContent = category;
                     cartItems.appendChild(categoryHeader);
-                    
+                   
                     // Agregar productos de esta categoría
                     cartData[category].forEach((item, index) => {
                         const itemTotal = item.price * item.quantity;
                         total += itemTotal;
-                        
+                       
                         const cartItem = document.createElement('div');
                         cartItem.className = 'cart-item';
-                        
+                       
                         cartItem.innerHTML = `
                             <img src="${item.image}" alt="${item.name}" class="cart-item-image" data-code="${item.code}">
                             <div class="cart-item-details">
@@ -2061,12 +1600,12 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         `;
-                        
+                       
                         cartItems.appendChild(cartItem);
                     });
                 }
             });
-            
+           
             if (!hasItems) {
                 cartItems.innerHTML = `
                     <div class="empty-cart">
@@ -2077,10 +1616,10 @@
                 cartTotal.textContent = '$0.00';
                 return;
             }
-            
+           
             // Actualizar total
             cartTotal.textContent = `$${total.toFixed(2)}`;
-            
+           
             // Agregar event listeners a los botones del carrito
             document.querySelectorAll('.cart-item-quantity .decrease').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -2089,7 +1628,7 @@
                     decreaseCartItemQuantity(category, index);
                 });
             });
-            
+           
             document.querySelectorAll('.cart-item-quantity .increase').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const category = e.target.dataset.category;
@@ -2097,7 +1636,7 @@
                     increaseCartItemQuantity(category, index);
                 });
             });
-            
+           
             document.querySelectorAll('.remove-item').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const category = e.target.dataset.category;
@@ -2105,7 +1644,7 @@
                     removeCartItem(category, index);
                 });
             });
-            
+           
             // Agregar event listeners a las imágenes del carrito para expandirlas
             document.querySelectorAll('.cart-item-image').forEach(img => {
                 img.addEventListener('click', (e) => {
@@ -2179,19 +1718,19 @@
                     totalItems += item.quantity;
                 });
             });
-            
+           
             if (totalItems === 0) {
                 showNotification('El carrito está vacío');
                 return;
             }
-            
+           
             const phoneNumber = '593986122265';
-            
+           
             // Crear mensaje detallado
             let message = '🛒 *NUEVO PEDIDO* 🛒%0A%0A';
             message += 'Hola, tengo un nuevo pedido:%0A%0A';
             message += '📋 *DETALLE DEL PEDIDO:*%0A%0A';
-            
+           
             // Agregar productos por categoría
             Object.keys(cartData).forEach(category => {
                 message += `*${category.toUpperCase()}*%0A`;
@@ -2204,28 +1743,28 @@
                     message += `     🧮 Subtotal: $${subtotal.toFixed(2)}%0A%0A`;
                 });
             });
-            
+           
             // Calcular total
             const total = Object.keys(cartData).reduce((sum, category) => {
                 return sum + cartData[category].reduce((catSum, item) => catSum + (item.price * item.quantity), 0);
             }, 0);
-            
+           
             message += '━━━━━━━━━━━━━━━━%0A';
             message += `💰 *TOTAL DEL PEDIDO: $${total.toFixed(2)}*%0A`;
             message += '━━━━━━━━━━━━━━━━%0A%0A';
             message += '📞 *Cliente espera confirmación*%0A';
             message += '⏰ *Por favor confirmar disponibilidad*%0A%0A';
             message += '¡Gracias! 🙏';
-            
+           
             // URL de WhatsApp universal que funciona en todos los dispositivos
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-            
+           
             // Abrir WhatsApp - funciona con un solo click
             window.open(whatsappUrl, '_blank');
-            
+           
             // Mostrar confirmación
             showNotification('Abriendo WhatsApp...');
-            
+           
             // Cerrar el carrito después de enviar
             setTimeout(() => {
                 closeCartModal();
