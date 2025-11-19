@@ -1645,11 +1645,23 @@
             // Calcular total
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            // Agregar información del referido si existe
+            // Obtener información del usuario actual
             const userData = JSON.parse(localStorage.getItem('excelenciaUser'));
+            
+            // Agregar información del referido si existe
             if (userData && userData.referredBy) {
                 message += '━━━━━━━━━━━━━━━━%0A';
-                message += `👤 *CLIENTE REFERIDO POR: ${userData.referredBy}*%0A`;
+                message += `👤 *INFORMACIÓN DE REFERIDO*%0A`;
+                message += `   • Usuario: ${userData.name}%0A`;
+                message += `   • Correo: ${userData.email}%0A`;
+                message += `   • Referido por: ${userData.referredBy}%0A`;
+                message += '━━━━━━━━━━━━━━━━%0A%0A';
+            } else {
+                message += '━━━━━━━━━━━━━━━━%0A';
+                message += `👤 *INFORMACIÓN DEL CLIENTE*%0A`;
+                message += `   • Usuario: ${userData.name}%0A`;
+                message += `   • Correo: ${userData.email}%0A`;
+                message += `   • Referido por: Ninguno%0A`;
                 message += '━━━━━━━━━━━━━━━━%0A%0A';
             }
             
