@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Imágenes (1000 fotos)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background: #4a90e2;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button.delete {
+            background: #e74c3c;
+        }
+        
+        button.delete:hover {
+            background: #c0392b;
+        }
+        
+        button.download {
+            background: #2ecc71;
+        }
+        
+        button.download:hover {
+            background: #27ae60;
+        }
+        
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input-container input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .image-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            aspect-ratio: 1;
+        }
+        
+        .image-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-checkbox {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            z-index: 10;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-item:hover .image-overlay {
+            transform: translateY(0);
+        }
+        
+        .image-name {
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .modal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .prev {
+            left: 15px;
+        }
+        
+        .next {
+            right: 15px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .empty-state h2 {
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .empty-state p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: #4a90e2;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gestor de Imágenes</h1>
+            <p class="subtitle">Sube, visualiza y gestiona hasta 1000 fotos</p>
+        </header>
+        
+        <div class="controls">
+            <div class="file-input-container">
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                    </svg>
+                    Seleccionar imágenes
+                </button>
+                <input type="file" id="fileInput" multiple accept="image/*">
+            </div>
+            
+            <button id="selectAllBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                </svg>
+                Seleccionar todas
+            </button>
+            
+            <button id="deselectAllBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                </svg>
+                Deseleccionar todas
+            </button>
+            
+            <button class="delete" id="deleteSelectedBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+                Eliminar seleccionadas
+            </button>
+            
+            <button class="download" id="downloadBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                </svg>
+                Descargar HTML
+            </button>
+            
+            <button id="saveProjectBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+                </svg>
+                Guardar proyecto
+            </button>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="uploadProgress"></div>
+        </div>
+        
+        <div class="stats">
+            <div>Total de imágenes: <span id="totalCount">0</span>/1000</div>
+            <div>Seleccionadas: <span id="selectedCount">0</span></div>
+            <div>Espacio utilizado: <span id="spaceUsed">0 MB</span></div>
+        </div>
+        
+        <div id="galleryContainer">
+            <div class="empty-state" id="emptyState">
+                <h2>No hay imágenes cargadas</h2>
+                <p>Selecciona imágenes usando el botón "Seleccionar imágenes" para comenzar. Puedes cargar hasta 1000 imágenes.</p>
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                    </svg>
+                    Seleccionar imágenes
+                </button>
+            </div>
+            <div class="gallery" id="imageGallery"></div>
+        </div>
+    </div>
+    
+    <!-- Modal para vista expandida -->
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <span class="prev">&#10094;</span>
+        <span class="next">&#10095;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Imagen expandida">
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let images = [];
+        let selectedImages = new Set();
+        let currentModalIndex = 0;
+        const MAX_IMAGES = 1000;
+        
+        // Elementos del DOM
+        const fileInput = document.getElementById('fileInput');
+        const imageGallery = document.getElementById('imageGallery');
+        const emptyState = document.getElementById('emptyState');
+        const totalCount = document.getElementById('totalCount');
+        const selectedCount = document.getElementById('selectedCount');
+        const spaceUsed = document.getElementById('spaceUsed');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const deselectAllBtn = document.getElementById('deselectAllBtn');
+        const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const saveProjectBtn = document.getElementById('saveProjectBtn');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        
+        // Cargar imágenes desde localStorage al iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            loadImagesFromStorage();
+            updateGallery();
+            updateStats();
+        });
+        
+        // Event listeners
+        fileInput.addEventListener('change', handleFileSelect);
+        selectAllBtn.addEventListener('click', selectAllImages);
+        deselectAllBtn.addEventListener('click', deselectAllImages);
+        deleteSelectedBtn.addEventListener('click', deleteSelectedImages);
+        downloadBtn.addEventListener('click', downloadHTML);
+        saveProjectBtn.addEventListener('click', saveProject);
+        closeModal.addEventListener('click', closeImageModal);
+        prevBtn.addEventListener('click', showPrevImage);
+        nextBtn.addEventListener('click', showNextImage);
+        
+        // Manejar la selección de archivos
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (!files.length) return;
+            
+            // Verificar si excedemos el límite
+            if (images.length + files.length > MAX_IMAGES) {
+                alert(`Solo puedes cargar hasta ${MAX_IMAGES} imágenes. Ya tienes ${images.length} y estás intentando agregar ${files.length} más.`);
+                return;
+            }
+            
+            let processed = 0;
+            uploadProgress.style.width = '0%';
+            
+            // Procesar cada archivo
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Verificar que sea una imagen
+                if (!file.type.match('image.*')) continue;
+                
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    // Crear objeto de imagen
+                    const imageObj = {
+                        id: Date.now() + i,
+                        name: file.name,
+                        data: e.target.result,
+                        size: file.size,
+                        type: file.type
+                    };
+                    
+                    images.push(imageObj);
+                    processed++;
+                    
+                    // Actualizar barra de progreso
+                    uploadProgress.style.width = `${(processed / files.length) * 100}%`;
+                    
+                    // Si hemos procesado todos los archivos
+                    if (processed === files.length) {
+                        updateGallery();
+                        updateStats();
+                        saveImagesToStorage();
+                        
+                        // Resetear el input de archivo
+                        fileInput.value = '';
+                        
+                        // Ocultar barra de progreso después de un tiempo
+                        setTimeout(() => {
+                            uploadProgress.style.width = '0%';
+                        }, 1000);
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Actualizar la galería
+        function updateGallery() {
+            // Mostrar/ocultar estado vacío
+            if (images.length === 0) {
+                emptyState.style.display = 'block';
+                imageGallery.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                imageGallery.style.display = 'grid';
+            }
+            
+            // Limpiar galería
+            imageGallery.innerHTML = '';
+            
+            // Agregar imágenes a la galería
+            images.forEach((image, index) => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                
+                const img = document.createElement('img');
+                img.src = image.data;
+                img.alt = image.name;
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'image-checkbox';
+                checkbox.checked = selectedImages.has(image.id);
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        selectedImages.add(image.id);
+                    } else {
+                        selectedImages.delete(image.id);
+                    }
+                    updateStats();
+                });
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'image-overlay';
+                
+                const imageName = document.createElement('div');
+                imageName.className = 'image-name';
+                imageName.textContent = image.name;
+                
+                overlay.appendChild(imageName);
+                imageItem.appendChild(checkbox);
+                imageItem.appendChild(img);
+                imageItem.appendChild(overlay);
+                
+                // Hacer clic en la imagen para expandir
+                img.addEventListener('click', () => {
+                    openImageModal(index);
+                });
+                
+                imageGallery.appendChild(imageItem);
+            });
+        }
+        
+        // Actualizar estadísticas
+        function updateStats() {
+            totalCount.textContent = images.length;
+            selectedCount.textContent = selectedImages.size;
+            
+            // Calcular espacio utilizado
+            const totalSize = images.reduce((sum, image) => sum + image.size, 0);
+            const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
+            spaceUsed.textContent = `${sizeInMB} MB`;
+        }
+        
+        // Seleccionar todas las imágenes
+        function selectAllImages() {
+            selectedImages.clear();
+            images.forEach(image => selectedImages.add(image.id));
+            updateGallery();
+            updateStats();
+        }
+        
+        // Deseleccionar todas las imágenes
+        function deselectAllImages() {
+            selectedImages.clear();
+            updateGallery();
+            updateStats();
+        }
+        
+        // Eliminar imágenes seleccionadas
+        function deleteSelectedImages() {
+            if (selectedImages.size === 0) {
+                alert('No hay imágenes seleccionadas para eliminar.');
+                return;
+            }
+            
+            if (confirm(`¿Estás seguro de que quieres eliminar ${selectedImages.size} imagen(es)?`)) {
+                images = images.filter(image => !selectedImages.has(image.id));
+                selectedImages.clear();
+                updateGallery();
+                updateStats();
+                saveImagesToStorage();
+            }
+        }
+        
+        // Descargar HTML con las imágenes
+        function downloadHTML() {
+            if (images.length === 0) {
+                alert('No hay imágenes para descargar.');
+                return;
+            }
+            
+            // Crear contenido HTML
+            let htmlContent = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Imágenes Descargada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .image-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .image-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Galería de Imágenes (${images.length} imágenes)</h1>
+    <div class="gallery">`;
+            
+            // Agregar cada imagen al HTML
+            images.forEach(image => {
+                htmlContent += `
+        <div class="image-item">
+            <img src="${image.data}" alt="${image.name}">
+        </div>`;
+            });
+            
+            htmlContent += `
+    </div>
+</body>
+</html>`;
+            
+            // Crear y descargar el archivo
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'galeria_imagenes.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Guardar proyecto en localStorage
+        function saveProject() {
+            saveImagesToStorage();
+            alert('Proyecto guardado correctamente. Se cargará automáticamente la próxima vez que visites esta página.');
+        }
+        
+        // Guardar imágenes en localStorage
+        function saveImagesToStorage() {
+            try {
+                // Para evitar problemas de tamaño, guardamos solo las primeras 100 imágenes
+                // En una aplicación real, usaríamos IndexedDB para almacenar más datos
+                const imagesToSave = images.slice(0, 100);
+                localStorage.setItem('imageGallery', JSON.stringify(imagesToSave));
+            } catch (e) {
+                console.error('Error al guardar en localStorage:', e);
+                alert('No se pudo guardar el proyecto. El almacenamiento local puede estar lleno.');
+            }
+        }
+        
+        // Cargar imágenes desde localStorage
+        function loadImagesFromStorage() {
+            try {
+                const savedImages = localStorage.getItem('imageGallery');
+                if (savedImages) {
+                    images = JSON.parse(savedImages);
+                }
+            } catch (e) {
+                console.error('Error al cargar desde localStorage:', e);
+            }
+        }
+        
+        // Abrir modal con imagen expandida
+        function openImageModal(index) {
+            currentModalIndex = index;
+            modalImage.src = images[index].data;
+            imageModal.style.display = 'flex';
+        }
+        
+        // Cerrar modal
+        function closeImageModal() {
+            imageModal.style.display = 'none';
+        }
+        
+        // Mostrar imagen anterior en el modal
+        function showPrevImage() {
+            currentModalIndex = (currentModalIndex - 1 + images.length) % images.length;
+            modalImage.src = images[currentModalIndex].data;
+        }
+        
+        // Mostrar siguiente imagen en el modal
+        function showNextImage() {
+            currentModalIndex = (currentModalIndex + 1) % images.length;
+            modalImage.src = images[currentModalIndex].data;
+        }
+        
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            } else if (imageModal.style.display === 'flex') {
+                if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
