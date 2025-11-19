@@ -643,6 +643,216 @@
         opacity: 1;
     }
     
+    /* Estilos para el sistema de referidos */
+    .referral-section {
+        margin-top: 40px;
+    }
+    
+    .referral-card {
+        background: rgba(10, 26, 42, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 119, 204, 0.3);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .referral-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(to right, var(--gold), var(--accent));
+    }
+    
+    .referral-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .referral-icon {
+        color: var(--accent);
+    }
+    
+    .referral-content {
+        color: var(--text-dim);
+        line-height: 1.6;
+    }
+    
+    .referral-link-container {
+        display: flex;
+        margin: 1rem 0;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .referral-link {
+        flex: 1;
+        padding: 12px 15px;
+        background: transparent;
+        border: none;
+        color: var(--text);
+        font-size: 0.9rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .copy-btn {
+        padding: 12px 20px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+    }
+    
+    .copy-btn:hover {
+        background: #005599;
+    }
+    
+    .share-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 1rem;
+    }
+    
+    .share-btn {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+    
+    .whatsapp-share {
+        background-color: #25D366;
+        color: white;
+    }
+    
+    .whatsapp-share:hover {
+        background-color: #20b858;
+    }
+    
+    .facebook-share {
+        background-color: #3b5998;
+        color: white;
+    }
+    
+    .facebook-share:hover {
+        background-color: #344e86;
+    }
+    
+    .telegram-share {
+        background-color: #0088cc;
+        color: white;
+    }
+    
+    .telegram-share:hover {
+        background-color: #0077b3;
+    }
+    
+    .referral-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    .referral-stat {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+    }
+    
+    .referral-stat-value {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(to right, var(--gold), var(--accent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    .referral-stat-label {
+        color: var(--text-dim);
+        font-size: 0.9rem;
+    }
+    
+    /* Modal de referidos */
+    .referral-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 100002;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+    }
+    
+    .referral-modal.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .referral-modal-content {
+        background: var(--primary);
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        padding: 2rem;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 119, 204, 0.3);
+    }
+    
+    .close-referral {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .referral-modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--text);
+    }
+    
+    .referral-modal-text {
+        color: var(--text-dim);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+    
     /* Responsive */
     @media (max-width: 768px) {
         header {
@@ -694,6 +904,10 @@
         .cart-modal {
             max-width: 100%;
         }
+        
+        .share-buttons {
+            flex-direction: column;
+        }
     }
     
     @media (max-width: 480px) {
@@ -712,6 +926,14 @@
         
         .section-title h2 {
             font-size: 1.8rem;
+        }
+        
+        .referral-link-container {
+            flex-direction: column;
+        }
+        
+        .copy-btn {
+            border-radius: 0 0 5px 5px;
         }
     }
     </style>
@@ -748,6 +970,54 @@
                 <h1 class="welcome-title">Bienvenido al Sistema Empresarial</h1>
                 <p class="welcome-subtitle">Gestiona tus productos, clientes y ventas de manera eficiente con nuestra plataforma integral de comercio al por mayor.</p>
             </div>
+
+            <!-- Sección de Referidos -->
+            <section class="referral-section">
+                <div class="referral-card">
+                    <h2 class="referral-title">
+                        <i class="fas fa-user-plus referral-icon"></i>
+                        Programa de Referidos
+                    </h2>
+                    <div class="referral-content">
+                        <p>Comparte tu enlace de referido y gana beneficios por cada persona que se registre y realice compras a través de tu enlace.</p>
+                        
+                        <div class="referral-link-container">
+                            <input type="text" class="referral-link" id="referralLink" readonly>
+                            <button class="copy-btn" id="copyReferralBtn">Copiar</button>
+                        </div>
+                        
+                        <div class="share-buttons">
+                            <button class="share-btn whatsapp-share" id="whatsappShare">
+                                <i class="fab fa-whatsapp"></i>
+                                WhatsApp
+                            </button>
+                            <button class="share-btn facebook-share" id="facebookShare">
+                                <i class="fab fa-facebook"></i>
+                                Facebook
+                            </button>
+                            <button class="share-btn telegram-share" id="telegramShare">
+                                <i class="fab fa-telegram"></i>
+                                Telegram
+                            </button>
+                        </div>
+                        
+                        <div class="referral-stats">
+                            <div class="referral-stat">
+                                <div class="referral-stat-value" id="referralCount">0</div>
+                                <div class="referral-stat-label">Personas Referidas</div>
+                            </div>
+                            <div class="referral-stat">
+                                <div class="referral-stat-value" id="referralSales">0</div>
+                                <div class="referral-stat-label">Ventas por Referidos</div>
+                            </div>
+                            <div class="referral-stat">
+                                <div class="referral-stat-value" id="referralEarnings">$0</div>
+                                <div class="referral-stat-label">Ganancias por Referidos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Estadísticas del carrito -->
             <div class="stats-grid">
@@ -794,7 +1064,7 @@
 
                     
                     <a href="factura/index.html" class="portal-btn" data-name="Celulares">
-                        <i class="fas fa-qrcode"></i>
+                        <i class="fas fa-mobile"></i>
                         FACTURA 
                     </a>
 
@@ -927,6 +1197,16 @@
         </div>
     </div>
 
+    <!-- Modal de referidos -->
+    <div class="referral-modal" id="referralModal">
+        <div class="referral-modal-content">
+            <button class="close-referral" id="closeReferral">✕</button>
+            <h3 class="referral-modal-title">¡Enlace Copiado!</h3>
+            <p class="referral-modal-text">Tu enlace de referido ha sido copiado al portapapeles. Ahora puedes compartirlo con tus amigos y familiares.</p>
+            <button class="action-btn" id="closeReferralBtn">Aceptar</button>
+        </div>
+    </div>
+
     <script>
         // Crear partículas flotantes
         function createParticles() {
@@ -966,6 +1246,77 @@
             
             // Actualizar mensaje de bienvenida
             document.querySelector('.welcome-title').textContent = `Bienvenido, ${userData.name}`;
+            
+            // Generar o cargar ID de referido
+            if (!userData.referralId) {
+                userData.referralId = generateReferralId();
+                localStorage.setItem('excelenciaUser', JSON.stringify(userData));
+            }
+            
+            // Cargar estadísticas de referidos
+            loadReferralStats(userData.referralId);
+            
+            // Generar enlace de referido
+            generateReferralLink(userData.referralId);
+        }
+        
+        // Generar ID de referido único
+        function generateReferralId() {
+            return 'REF-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+        }
+        
+        // Generar enlace de referido
+        function generateReferralLink(referralId) {
+            const baseUrl = window.location.origin + window.location.pathname;
+            const referralLink = `${baseUrl}?ref=${referralId}`;
+            document.getElementById('referralLink').value = referralLink;
+            return referralLink;
+        }
+        
+        // Cargar estadísticas de referidos
+        function loadReferralStats(referralId) {
+            // Cargar estadísticas desde localStorage
+            const referralStats = JSON.parse(localStorage.getItem('excelenciaReferralStats')) || {};
+            const userStats = referralStats[referralId] || { count: 0, sales: 0, earnings: 0 };
+            
+            document.getElementById('referralCount').textContent = userStats.count;
+            document.getElementById('referralSales').textContent = userStats.sales;
+            document.getElementById('referralEarnings').textContent = `$${userStats.earnings.toFixed(2)}`;
+        }
+        
+        // Guardar estadísticas de referidos
+        function saveReferralStats(referralId, stats) {
+            const referralStats = JSON.parse(localStorage.getItem('excelenciaReferralStats')) || {};
+            referralStats[referralId] = stats;
+            localStorage.setItem('excelenciaReferralStats', JSON.stringify(referralStats));
+        }
+        
+        // Verificar si hay un referido en la URL
+        function checkReferralInUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const referralId = urlParams.get('ref');
+            
+            if (referralId) {
+                // Guardar el referido en localStorage
+                const userData = JSON.parse(localStorage.getItem('excelenciaUser'));
+                if (userData && userData.referralId !== referralId) {
+                    userData.referredBy = referralId;
+                    localStorage.setItem('excelenciaUser', JSON.stringify(userData));
+                    
+                    // Actualizar estadísticas del referido
+                    const referralStats = JSON.parse(localStorage.getItem('excelenciaReferralStats')) || {};
+                    const referrerStats = referralStats[referralId] || { count: 0, sales: 0, earnings: 0 };
+                    referrerStats.count += 1;
+                    referralStats[referralId] = referrerStats;
+                    localStorage.setItem('excelenciaReferralStats', JSON.stringify(referralStats));
+                    
+                    // Mostrar notificación
+                    showNotification('¡Has sido referido por un amigo!');
+                }
+                
+                // Limpiar el parámetro de la URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
         }
         
         // Cerrar sesión
@@ -994,6 +1345,15 @@
         const cartTotalValue = document.getElementById('cartTotalValue');
         const categoriesCount = document.getElementById('categoriesCount');
 
+        // Elementos del sistema de referidos
+        const copyReferralBtn = document.getElementById('copyReferralBtn');
+        const whatsappShare = document.getElementById('whatsappShare');
+        const facebookShare = document.getElementById('facebookShare');
+        const telegramShare = document.getElementById('telegramShare');
+        const referralModal = document.getElementById('referralModal');
+        const closeReferral = document.getElementById('closeReferral');
+        const closeReferralBtn = document.getElementById('closeReferralBtn');
+
         // Inicializar el carrito
         function initCart() {
             loadCartFromStorage();
@@ -1015,6 +1375,57 @@
                     updateCartDisplay();
                 }
             });
+        }
+
+        // Configurar event listeners del sistema de referidos
+        function setupReferralEventListeners() {
+            copyReferralBtn.addEventListener('click', copyReferralLink);
+            whatsappShare.addEventListener('click', shareViaWhatsApp);
+            facebookShare.addEventListener('click', shareViaFacebook);
+            telegramShare.addEventListener('click', shareViaTelegram);
+            closeReferral.addEventListener('click', closeReferralModal);
+            closeReferralBtn.addEventListener('click', closeReferralModal);
+        }
+
+        // Copiar enlace de referido al portapapeles
+        function copyReferralLink() {
+            const referralLink = document.getElementById('referralLink');
+            referralLink.select();
+            referralLink.setSelectionRange(0, 99999); // Para dispositivos móviles
+            document.execCommand('copy');
+            
+            // Mostrar modal de confirmación
+            referralModal.classList.add('active');
+        }
+
+        // Compartir enlace por WhatsApp
+        function shareViaWhatsApp() {
+            const referralLink = document.getElementById('referralLink').value;
+            const userData = JSON.parse(localStorage.getItem('excelenciaUser'));
+            const message = `¡Hola! Te invito a unirte a Comercial La Excelencia. Usa mi enlace de referido para registrarte: ${referralLink}`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Compartir enlace por Facebook
+        function shareViaFacebook() {
+            const referralLink = document.getElementById('referralLink').value;
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`;
+            window.open(facebookUrl, '_blank', 'width=600,height=400');
+        }
+
+        // Compartir enlace por Telegram
+        function shareViaTelegram() {
+            const referralLink = document.getElementById('referralLink').value;
+            const userData = JSON.parse(localStorage.getItem('excelenciaUser'));
+            const message = `¡Hola! Te invito a unirte a Comercial La Excelencia. Usa mi enlace de referido para registrarte: ${referralLink}`;
+            const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(message)}`;
+            window.open(telegramUrl, '_blank');
+        }
+
+        // Cerrar modal de referidos
+        function closeReferralModal() {
+            referralModal.classList.remove('active');
         }
 
         // Cargar carrito desde localStorage
@@ -1234,6 +1645,14 @@
             // Calcular total
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
+            // Agregar información del referido si existe
+            const userData = JSON.parse(localStorage.getItem('excelenciaUser'));
+            if (userData && userData.referredBy) {
+                message += '━━━━━━━━━━━━━━━━%0A';
+                message += `👤 *CLIENTE REFERIDO POR: ${userData.referredBy}*%0A`;
+                message += '━━━━━━━━━━━━━━━━%0A%0A';
+            }
+            
             message += '━━━━━━━━━━━━━━━━%0A';
             message += `💰 *TOTAL DEL PEDIDO: $${total.toFixed(2)}*%0A`;
             message += '━━━━━━━━━━━━━━━━%0A%0A';
@@ -1250,6 +1669,19 @@
             // Mostrar confirmación
             showNotification('Abriendo WhatsApp...');
             
+            // Actualizar estadísticas de referidos si corresponde
+            if (userData && userData.referredBy) {
+                const referralStats = JSON.parse(localStorage.getItem('excelenciaReferralStats')) || {};
+                const referrerStats = referralStats[userData.referredBy] || { count: 0, sales: 0, earnings: 0 };
+                referrerStats.sales += 1;
+                referrerStats.earnings += total * 0.05; // 5% de comisión por ejemplo
+                referralStats[userData.referredBy] = referrerStats;
+                localStorage.setItem('excelenciaReferralStats', JSON.stringify(referralStats));
+                
+                // Actualizar visualización de estadísticas
+                loadReferralStats(userData.referralId);
+            }
+            
             // Cerrar el carrito después de enviar
             setTimeout(() => {
                 closeCartModal();
@@ -1260,7 +1692,9 @@
         window.addEventListener('load', function() {
             createParticles();
             loadUserData();
+            checkReferralInUrl();
             initCart();
+            setupReferralEventListeners();
             
             // Verificar si hay datos de carrito en la URL (cuando se redirige desde una categoría)
             const urlParams = new URLSearchParams(window.location.search);
